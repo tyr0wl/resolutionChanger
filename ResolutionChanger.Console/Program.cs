@@ -80,24 +80,23 @@ namespace ResolutionChanger.Console
             }
 
             var secondMonitor = monitors.First();
-            SetAsPrimaryMonitor(secondMonitor.Id);
+            SetAsPrimaryMonitor(secondMonitor);
         }
 
-        public static void SetAsPrimaryMonitor(uint id)
+        public static void SetAsPrimaryMonitor(Monitor monitor)
         {
             var device = new DisplayDevice();
             var deviceMode = new DevMode();
             device.cb = Marshal.SizeOf(device);
 
-            User32.EnumDisplayDevices(null, id, ref device, 0);
-            User32.EnumDisplaySettings(device.DeviceName, User32.EnumCurrentSettings, ref deviceMode);
+            User32.EnumDisplaySettings(monitor.DeviceName, User32.EnumCurrentSettings, ref deviceMode);
             var offsetX = deviceMode.dmPosition.x;
             var offsetY = deviceMode.dmPosition.y;
             deviceMode.dmPosition.x = 0;
             deviceMode.dmPosition.y = 0;
 
             User32.ChangeDisplaySettingsEx(
-                device.DeviceName,
+                monitor.DeviceName,
                 ref deviceMode,
                 (IntPtr)null,
                 (ChangeDisplaySettingsFlags.CDS_SET_PRIMARY | ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY | ChangeDisplaySettingsFlags.CDS_NORESET),
@@ -109,7 +108,7 @@ namespace ResolutionChanger.Console
             // Update remaining devices
             for (uint otherId = 0; User32.EnumDisplayDevices(null, otherId, ref device, 0); otherId++)
             {
-                if (device.StateFlags.HasFlag(DisplayDeviceStateFlags.AttachedToDesktop) && otherId != id)
+                if (device.StateFlags.HasFlag(DisplayDeviceStateFlags.AttachedToDesktop) && otherId != monitor.Id)
                 {
                     device.cb = Marshal.SizeOf(device);
                     var otherDeviceMode = new DevMode();
