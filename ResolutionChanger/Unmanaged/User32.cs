@@ -5,6 +5,10 @@ namespace ResolutionChanger.Unmanaged
 {
     public class User32
     {
+
+        [DllImport("user32.dll")]
+        public static extern bool EnumDisplaySettings(string deviceName, int modeNum, ref DevMode devMode);
+
         [DllImport("user32.dll")]
         public static extern bool EnumDisplayDevices(string lpDevice, uint iDevNum, ref DisplayDevice lpDisplayDevice, uint dwFlags);
     }

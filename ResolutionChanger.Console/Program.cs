@@ -40,6 +40,28 @@ namespace ResolutionChanger.Console
             {
                 SystemConsole.WriteLine(ex);
             }
+
+            foreach (var monitor in monitors)
+            {
+                var devMode = new DevMode();
+                devMode.dmSize = (short)Marshal.SizeOf(devMode);
+
+                // User32.EnumDisplaySettings only fills devMode with the settings for the provided modeNum.
+                // In order to get all supported resolutions for a monitor we need to call User32.EnumDisplaySettings with increasing modeNums until it returns false.
+                var modeNum = 0;
+                while (User32.EnumDisplaySettings(monitor.DeviceName, modeNum, ref devMode))
+                {
+                    modeNum++;
+                    monitor.SupportedResolutions.Add(new Resolution
+                    {
+                        Width = devMode.dmPelsWidth,
+                        Height = devMode.dmPelsHeight,
+                        Frequency = devMode.dmDisplayFrequency,
+                    });
+                }
+
+                SystemConsole.WriteLine(monitor);
+            }
         }
     }
 }

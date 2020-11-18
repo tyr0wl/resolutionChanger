@@ -5,6 +5,7 @@ namespace ResolutionChanger
     public class Monitor
     {
         public string DeviceName { get; set; }
+        public List<Resolution> SupportedResolutions { get; } = new List<Resolution>();
         public bool IsPrimary { get; set; }
         public bool IsActive { get; set; }
 
