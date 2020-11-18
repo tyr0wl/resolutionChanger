@@ -79,6 +79,7 @@ namespace ResolutionChanger.Console
                 SystemConsole.WriteLine(monitor);
             }
 
+            var primaryMonitor = monitors.First(monitor => monitor.IsPrimary);
             var secondMonitor = monitors.Skip(1).First();
             //secondMonitor.CurrentResolution = new Resolution
             //{
@@ -88,7 +89,10 @@ namespace ResolutionChanger.Console
             //};
             //secondMonitor.Position = new Point { X = -1920, Y = 1440 - 1080 };
             secondMonitor.IsActive = false;
+            secondMonitor.CurrentResolution = new Resolution { Width = 1920, Height = 1080, Frequency = 120 };
+            secondMonitor.Position = new Point { X = -secondMonitor.CurrentResolution.Width, Y = primaryMonitor.Position.Y - secondMonitor.Position.Y };
             Update(secondMonitor);
+
             //SetAsPrimaryMonitor(secondMonitor);
             //Deactivate(secondMonitor);
         }
@@ -105,6 +109,8 @@ namespace ResolutionChanger.Console
 
             User32.EnumDisplaySettings(monitor.DeviceName, User32.EnumCurrentSettings, ref deviceMode);
 
+            deviceMode.dmPelsWidth = monitor.CurrentResolution.Width;
+            deviceMode.dmPelsHeight = monitor.CurrentResolution.Height;
             deviceMode.dmDisplayFrequency = monitor.CurrentResolution.Frequency;
             deviceMode.dmPosition.x = monitor.Position.X;
             deviceMode.dmPosition.y = monitor.Position.Y;
