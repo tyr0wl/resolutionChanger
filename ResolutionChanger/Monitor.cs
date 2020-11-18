@@ -4,6 +4,7 @@ namespace ResolutionChanger
 {
     public class Monitor
     {
+        public uint Id { get; set; }
         public string DeviceName { get; set; }
         public List<Resolution> SupportedResolutions { get; } = new List<Resolution>();
         public Resolution CurrentResolution { get; set; }
