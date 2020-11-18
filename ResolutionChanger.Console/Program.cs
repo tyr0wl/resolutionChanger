@@ -23,9 +23,7 @@ namespace ResolutionChanger.Console
                 {
                     if (displayDevice.StateFlags.HasFlag(DisplayDeviceStateFlags.AttachedToDesktop))
                     {
-                        SystemConsole.WriteLine($"{id}, {displayDevice.DeviceName}, {displayDevice.DeviceString}, {displayDevice.StateFlags}, {displayDevice.DeviceID}, {displayDevice.DeviceKey}");
                         displayDevice.cb = Marshal.SizeOf(displayDevice);
-                        SystemConsole.WriteLine($"{displayDevice.DeviceName}, {displayDevice.DeviceString}");
                     }
 
                     monitors.Add(new Monitor
