@@ -25,7 +25,6 @@ namespace ResolutionChanger.Console
                     {
                         SystemConsole.WriteLine($"{id}, {displayDevice.DeviceName}, {displayDevice.DeviceString}, {displayDevice.StateFlags}, {displayDevice.DeviceID}, {displayDevice.DeviceKey}");
                         displayDevice.cb = Marshal.SizeOf(displayDevice);
-                        User32.EnumDisplayDevices(displayDevice.DeviceName, 0, ref displayDevice, 0);
                         SystemConsole.WriteLine($"{displayDevice.DeviceName}, {displayDevice.DeviceString}");
                     }
 
