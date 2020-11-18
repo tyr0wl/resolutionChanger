@@ -21,11 +21,6 @@ namespace ResolutionChanger.Console
                 // In order to get all devices we need to call User32.EnumDisplayDevices with increasing iDevNums until it returns false.
                 for (uint id = 0; User32.EnumDisplayDevices(null, id, ref displayDevice, 0); id++)
                 {
-                    if (displayDevice.StateFlags.HasFlag(DisplayDeviceStateFlags.AttachedToDesktop))
-                    {
-                        displayDevice.cb = Marshal.SizeOf(displayDevice);
-                    }
-
                     monitors.Add(new Monitor
                     {
                         Id = id,
