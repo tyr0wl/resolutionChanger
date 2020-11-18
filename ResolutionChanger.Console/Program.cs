@@ -59,6 +59,12 @@ namespace ResolutionChanger.Console
                     };
                 }
 
+                monitor.Position = new Point
+                {
+                    X = devMode.dmPosition.x,
+                    Y = devMode.dmPosition.y
+                };
+
                 // User32.EnumDisplaySettings only fills devMode with the settings for the provided modeNum.
                 // In order to get all supported resolutions for a monitor we need to call User32.EnumDisplaySettings with increasing modeNums until it returns false.
                 var modeNum = 0;
