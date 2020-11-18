@@ -6,6 +6,7 @@ namespace ResolutionChanger
     {
         public string DeviceName { get; set; }
         public List<Resolution> SupportedResolutions { get; } = new List<Resolution>();
+        public Resolution CurrentResolution { get; set; }
         public bool IsPrimary { get; set; }
         public bool IsActive { get; set; }
 
@@ -13,7 +14,8 @@ namespace ResolutionChanger
         {
             var primaryString = IsPrimary ? "P" : null;
             var activeString = IsActive ? "A" : "D";
-            return $"{DeviceName}({primaryString}{activeString})";
+            var currentResolution = !Equals(CurrentResolution, Resolution.Empty) ? $" {CurrentResolution}" : null;
+            return $"{DeviceName}({primaryString}{activeString}){currentResolution}";
         }
     }
 }

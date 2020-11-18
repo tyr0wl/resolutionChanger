@@ -48,6 +48,16 @@ namespace ResolutionChanger.Console
                 var devMode = new DevMode();
                 devMode.dmSize = (short)Marshal.SizeOf(devMode);
 
+                if (User32.EnumDisplaySettings(monitor.DeviceName, User32.EnumCurrentSettings, ref devMode))
+                {
+                    monitor.CurrentResolution = new Resolution
+                    {
+                        Width = devMode.dmPelsWidth,
+                        Height = devMode.dmPelsHeight,
+                        Frequency = devMode.dmDisplayFrequency,
+                    };
+                }
+
                 // User32.EnumDisplaySettings only fills devMode with the settings for the provided modeNum.
                 // In order to get all supported resolutions for a monitor we need to call User32.EnumDisplaySettings with increasing modeNums until it returns false.
                 var modeNum = 0;

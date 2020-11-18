@@ -1,4 +1,4 @@
-namespace ResolutionChanger
+﻿namespace ResolutionChanger
 {
     public struct Resolution
     {
