@@ -30,6 +30,8 @@ namespace ResolutionChanger.Console
                     monitors.Add(new Monitor
                     {
                         DeviceName = displayDevice.DeviceName,
+                        IsPrimary = displayDevice.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice),
+                        IsActive = displayDevice.StateFlags.HasFlag(DisplayDeviceStateFlags.AttachedToDesktop),
                     });
                     displayDevice.cb = Marshal.SizeOf(displayDevice);
                 }
