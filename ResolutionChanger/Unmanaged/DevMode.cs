@@ -15,7 +15,7 @@ namespace ResolutionChanger.Unmanaged
         [FieldOffset(34)] public short dmDriverVersion;
         [FieldOffset(36)] public short dmSize;
         [FieldOffset(38)] public short dmDriverExtra;
-        [FieldOffset(40)] public uint dmFields;
+        [FieldOffset(40)] public DmFieldFlags dmFields;
 
         [FieldOffset(44)] private readonly short dmOrientation;
         [FieldOffset(46)] private readonly short dmPaperSize;
