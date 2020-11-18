@@ -11,6 +11,27 @@ namespace ResolutionChanger.Console
     {
         private static void Main(string[] args)
         {
+            var displayDevice = new DisplayDevice();
+            displayDevice.cb = Marshal.SizeOf(displayDevice);
+            try
+            {
+                for (uint id = 0; User32.EnumDisplayDevices(null, id, ref displayDevice, 0); id++)
+                {
+                    if (displayDevice.StateFlags.HasFlag(DisplayDeviceStateFlags.AttachedToDesktop))
+                    {
+                        SystemConsole.WriteLine($"{id}, {displayDevice.DeviceName}, {displayDevice.DeviceString}, {displayDevice.StateFlags}, {displayDevice.DeviceID}, {displayDevice.DeviceKey}");
+                        displayDevice.cb = Marshal.SizeOf(displayDevice);
+                        User32.EnumDisplayDevices(displayDevice.DeviceName, 0, ref displayDevice, 0);
+                        SystemConsole.WriteLine($"{displayDevice.DeviceName}, {displayDevice.DeviceString}");
+                    }
+
+                    displayDevice.cb = Marshal.SizeOf(displayDevice);
+                }
+            }
+            catch (Exception ex)
+            {
+                SystemConsole.WriteLine(ex);
+            }
         }
     }
 }
