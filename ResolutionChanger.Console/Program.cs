@@ -81,6 +81,61 @@ namespace ResolutionChanger.Console
 
                 SystemConsole.WriteLine(monitor);
             }
+
+            var secondMonitor = monitors.First();
+            SetAsPrimaryMonitor(secondMonitor.Id);
+        }
+
+        public static void SetAsPrimaryMonitor(uint id)
+        {
+            var device = new DisplayDevice();
+            var deviceMode = new DevMode();
+            device.cb = Marshal.SizeOf(device);
+
+            User32.EnumDisplayDevices(null, id, ref device, 0);
+            User32.EnumDisplaySettings(device.DeviceName, User32.EnumCurrentSettings, ref deviceMode);
+            var offsetX = deviceMode.dmPosition.x;
+            var offsetY = deviceMode.dmPosition.y;
+            deviceMode.dmPosition.x = 0;
+            deviceMode.dmPosition.y = 0;
+
+            User32.ChangeDisplaySettingsEx(
+                device.DeviceName,
+                ref deviceMode,
+                (IntPtr)null,
+                (ChangeDisplaySettingsFlags.CDS_SET_PRIMARY | ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY | ChangeDisplaySettingsFlags.CDS_NORESET),
+                IntPtr.Zero);
+
+            device = new DisplayDevice();
+            device.cb = Marshal.SizeOf(device);
+
+            // Update remaining devices
+            for (uint otherId = 0; User32.EnumDisplayDevices(null, otherId, ref device, 0); otherId++)
+            {
+                if (device.StateFlags.HasFlag(DisplayDeviceStateFlags.AttachedToDesktop) && otherId != id)
+                {
+                    device.cb = Marshal.SizeOf(device);
+                    var otherDeviceMode = new DevMode();
+
+                    User32.EnumDisplaySettings(device.DeviceName, User32.EnumCurrentSettings, ref otherDeviceMode);
+
+                    otherDeviceMode.dmPosition.x -= offsetX;
+                    otherDeviceMode.dmPosition.y -= offsetY;
+
+                    User32.ChangeDisplaySettingsEx(
+                        device.DeviceName,
+                        ref otherDeviceMode,
+                        (IntPtr)null,
+                        (ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY | ChangeDisplaySettingsFlags.CDS_NORESET),
+                        IntPtr.Zero);
+
+                }
+
+                device.cb = Marshal.SizeOf(device);
+            }
+
+            // Apply settings
+            User32.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.CDS_NONE, (IntPtr)null);
         }
     }
 }
