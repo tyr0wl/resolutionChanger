@@ -87,8 +87,9 @@ namespace ResolutionChanger.Console
                 Frequency = 120,
             };
             //secondMonitor.Position = new Point { X = -1920, Y = 1440 - 1080 };
-            Update(secondMonitor);
-            SetAsPrimaryMonitor(secondMonitor);
+            //Update(secondMonitor);
+            //SetAsPrimaryMonitor(secondMonitor);
+            Deactivate(secondMonitor);
         }
 
         public static void Update(Monitor monitor)
@@ -108,6 +109,26 @@ namespace ResolutionChanger.Console
                 (ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY | ChangeDisplaySettingsFlags.CDS_NORESET),
                 IntPtr.Zero);
 
+            if (result == DisplayChange.Successful)
+            {
+                User32.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.CDS_NONE, (IntPtr)null);
+            }
+        }
+
+        public static void Deactivate(Monitor monitor)
+        {
+            var deleteScreenMode = new DevMode
+            {
+                dmDriverExtra = 0,
+                dmFields = DmFieldFlags.Position | DmFieldFlags.PelsHeight | DmFieldFlags.PelsWidth,
+                dmPelsWidth = 0,
+                dmPelsHeight = 0,
+                dmPosition = new PointL(),
+            };
+
+            deleteScreenMode.dmSize = (short)Marshal.SizeOf(deleteScreenMode); 
+            
+            var result = User32.ChangeDisplaySettingsEx(monitor.DeviceName, ref deleteScreenMode, IntPtr.Zero, ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY, IntPtr.Zero);
             if (result == DisplayChange.Successful)
             {
                 User32.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.CDS_NONE, (IntPtr)null);
