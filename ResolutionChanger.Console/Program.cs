@@ -83,6 +83,25 @@ namespace ResolutionChanger.Console
             SetAsPrimaryMonitor(secondMonitor);
         }
 
+        public static void Update(Monitor monitor)
+        {
+            var deviceMode = new DevMode();
+
+            User32.EnumDisplaySettings(monitor.DeviceName, User32.EnumCurrentSettings, ref deviceMode);
+
+            deviceMode.dmDisplayFrequency = monitor.CurrentResolution.Frequency;
+            deviceMode.dmPosition.x = monitor.Position.X;
+            deviceMode.dmPosition.y = monitor.Position.Y;
+
+            User32.ChangeDisplaySettingsEx(
+                monitor.DeviceName,
+                ref deviceMode,
+                (IntPtr)null,
+                (ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY | ChangeDisplaySettingsFlags.CDS_NORESET),
+                IntPtr.Zero);
+            User32.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.CDS_NONE, (IntPtr)null);
+        }
+
         public static void SetAsPrimaryMonitor(Monitor monitor)
         {
             var device = new DisplayDevice();
