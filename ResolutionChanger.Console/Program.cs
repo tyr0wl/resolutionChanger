@@ -17,6 +17,8 @@ namespace ResolutionChanger.Console
             displayDevice.cb = Marshal.SizeOf(displayDevice);
             try
             {
+                // User32.EnumDisplayDevices only fills displayDevice with the settings for the provided iDevNum.
+                // In order to get all devices we need to call User32.EnumDisplayDevices with increasing iDevNums until it returns false.
                 for (uint id = 0; User32.EnumDisplayDevices(null, id, ref displayDevice, 0); id++)
                 {
                     if (displayDevice.StateFlags.HasFlag(DisplayDeviceStateFlags.AttachedToDesktop))
