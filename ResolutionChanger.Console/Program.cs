@@ -11,6 +11,8 @@ namespace ResolutionChanger.Console
     {
         private static void Main(string[] args)
         {
+            var monitors = new List<Monitor>();
+
             var displayDevice = new DisplayDevice();
             displayDevice.cb = Marshal.SizeOf(displayDevice);
             try
@@ -25,6 +27,10 @@ namespace ResolutionChanger.Console
                         SystemConsole.WriteLine($"{displayDevice.DeviceName}, {displayDevice.DeviceString}");
                     }
 
+                    monitors.Add(new Monitor
+                    {
+                        DeviceName = displayDevice.DeviceName,
+                    });
                     displayDevice.cb = Marshal.SizeOf(displayDevice);
                 }
             }
