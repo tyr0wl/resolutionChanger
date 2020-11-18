@@ -79,7 +79,15 @@ namespace ResolutionChanger.Console
                 SystemConsole.WriteLine(monitor);
             }
 
-            var secondMonitor = monitors.First();
+            var secondMonitor = monitors.Skip(1).First();
+            secondMonitor.CurrentResolution = new Resolution
+            {
+                Width = secondMonitor.CurrentResolution.Width,
+                Height = secondMonitor.CurrentResolution.Height,
+                Frequency = 120,
+            };
+            //secondMonitor.Position = new Point { X = -1920, Y = 1440 - 1080 };
+            Update(secondMonitor);
             SetAsPrimaryMonitor(secondMonitor);
         }
 
