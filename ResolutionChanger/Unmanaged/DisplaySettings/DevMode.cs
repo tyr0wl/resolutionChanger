@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace ResolutionChanger.Unmanaged
+namespace ResolutionChanger.Unmanaged.DisplaySettings
 {
     [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Ansi)]
     public struct DevMode

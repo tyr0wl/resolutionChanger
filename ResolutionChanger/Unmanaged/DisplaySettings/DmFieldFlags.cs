@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ResolutionChanger.Unmanaged
+namespace ResolutionChanger.Unmanaged.DisplaySettings
 {
     [Flags]
     public enum DmFieldFlags

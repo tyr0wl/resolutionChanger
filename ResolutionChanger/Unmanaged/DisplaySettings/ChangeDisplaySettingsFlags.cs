@@ -1,6 +1,6 @@
 using System;
 
-namespace ResolutionChanger.Unmanaged
+namespace ResolutionChanger.Unmanaged.DisplaySettings
 {
     [Flags]
     public enum ChangeDisplaySettingsFlags : uint
