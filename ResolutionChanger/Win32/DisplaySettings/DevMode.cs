@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace ResolutionChanger.Unmanaged.DisplaySettings
+namespace ResolutionChanger.Win32.DisplaySettings
 {
     /// <summary>
     ///     The DEVMODE data structure contains information about the initialization and environment of a printer or a display device.

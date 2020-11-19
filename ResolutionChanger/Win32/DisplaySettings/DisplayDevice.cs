@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace ResolutionChanger.Unmanaged.DisplaySettings
+namespace ResolutionChanger.Win32.DisplaySettings
 {
     /// <summary>
     ///     The DISPLAY_DEVICE structure receives information about the display device specified by the iDevNum parameter of the <see cref="DisplaySettingsApi.EnumDisplayDevices"/> function (wingdi.h).

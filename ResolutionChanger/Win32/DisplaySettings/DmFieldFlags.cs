@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ResolutionChanger.Unmanaged.DisplaySettings
+namespace ResolutionChanger.Win32.DisplaySettings
 {
     [Flags]
     public enum DmFieldFlags

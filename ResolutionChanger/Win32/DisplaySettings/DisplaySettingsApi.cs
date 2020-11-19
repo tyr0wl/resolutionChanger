@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace ResolutionChanger.Unmanaged.DisplaySettings
+namespace ResolutionChanger.Win32.DisplaySettings
 {
     public class DisplaySettingsApi
     {

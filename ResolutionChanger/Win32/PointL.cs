@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace ResolutionChanger.Unmanaged
+namespace ResolutionChanger.Win32
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct PointL

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using ResolutionChanger.Unmanaged;
-using ResolutionChanger.Unmanaged.DisplaySettings;
+using ResolutionChanger.Win32;
+using ResolutionChanger.Win32.DisplaySettings;
 using SystemConsole = System.Console;
 
 namespace ResolutionChanger.Console

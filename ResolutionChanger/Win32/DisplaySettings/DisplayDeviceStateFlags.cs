@@ -1,6 +1,6 @@
 using System;
 
-namespace ResolutionChanger.Unmanaged.DisplaySettings
+namespace ResolutionChanger.Win32.DisplaySettings
 {
     /// <summary>
     ///     Corresponds to DWORD field StateFlags of the <see cref="DisplayDevice.StateFlags"/> structure.

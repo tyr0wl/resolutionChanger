@@ -1,6 +1,6 @@
 using System;
 
-namespace ResolutionChanger.Unmanaged.DisplaySettings
+namespace ResolutionChanger.Win32.DisplaySettings
 {
     /// <summary>
     ///     Corresponds to DWORD parameter dwFlags of the <see cref="DisplaySettingsApi.ChangeDisplaySettingsEx"/> function (winuser.h)
