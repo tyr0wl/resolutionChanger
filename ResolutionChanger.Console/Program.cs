@@ -118,12 +118,12 @@ namespace ResolutionChanger.Console
                 monitor.DeviceName,
                 ref deviceMode,
                 (IntPtr)null,
-                (ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY | ChangeDisplaySettingsFlags.CDS_NORESET),
+                (ChangeDisplaySettingsFlags.UpdateRegistry | ChangeDisplaySettingsFlags.NoReset),
                 IntPtr.Zero);
 
             if (result == DisplayChange.Successful)
             {
-                DisplaySettingsApi.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.CDS_NONE, (IntPtr)null);
+                DisplaySettingsApi.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.None, (IntPtr)null);
             }
         }
 
@@ -140,10 +140,10 @@ namespace ResolutionChanger.Console
 
             deleteScreenMode.dmSize = (short)Marshal.SizeOf(deleteScreenMode); 
             
-            var result = DisplaySettingsApi.ChangeDisplaySettingsEx(monitor.DeviceName, ref deleteScreenMode, IntPtr.Zero, ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY, IntPtr.Zero);
+            var result = DisplaySettingsApi.ChangeDisplaySettingsEx(monitor.DeviceName, ref deleteScreenMode, IntPtr.Zero, ChangeDisplaySettingsFlags.UpdateRegistry, IntPtr.Zero);
             if (result == DisplayChange.Successful)
             {
-                DisplaySettingsApi.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.CDS_NONE, (IntPtr)null);
+                DisplaySettingsApi.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.None, (IntPtr)null);
             }
         }
 
@@ -163,7 +163,7 @@ namespace ResolutionChanger.Console
                 monitor.DeviceName,
                 ref deviceMode,
                 (IntPtr)null,
-                (ChangeDisplaySettingsFlags.CDS_SET_PRIMARY | ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY | ChangeDisplaySettingsFlags.CDS_NORESET),
+                (ChangeDisplaySettingsFlags.SetPrimary | ChangeDisplaySettingsFlags.UpdateRegistry | ChangeDisplaySettingsFlags.NoReset),
                 IntPtr.Zero);
 
             if (result != DisplayChange.Successful)
@@ -191,7 +191,7 @@ namespace ResolutionChanger.Console
                         device.DeviceName,
                         ref otherDeviceMode,
                         (IntPtr)null,
-                        (ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY | ChangeDisplaySettingsFlags.CDS_NORESET),
+                        (ChangeDisplaySettingsFlags.UpdateRegistry | ChangeDisplaySettingsFlags.NoReset),
                         IntPtr.Zero);
 
                     if (result != DisplayChange.Successful)
@@ -204,7 +204,7 @@ namespace ResolutionChanger.Console
             }
 
             // Apply settings
-            DisplaySettingsApi.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.CDS_NONE, (IntPtr)null);
+            DisplaySettingsApi.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.None, (IntPtr)null);
         }
     }
 }

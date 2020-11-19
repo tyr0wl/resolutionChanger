@@ -115,19 +115,19 @@ namespace ResolutionChanger.Unmanaged.DisplaySettings
         /// <param name="dwflags">
         ///     Indicates how the graphics mode should be changed.
         ///     <br />
-        ///     Specifying <see cref="ChangeDisplaySettingsFlags.CDS_TEST" /> allows an application to determine which graphics
+        ///     Specifying <see cref="ChangeDisplaySettingsFlags.Test" /> allows an application to determine which graphics
         ///     modes are actually valid, without causing the system to change to them.
         ///     <br />
-        ///     If <see cref="ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY" /> is specified and it is possible to change the
+        ///     If <see cref="ChangeDisplaySettingsFlags.UpdateRegistry" /> is specified and it is possible to change the
         ///     graphics mode dynamically, the information is stored in the registry and <see cref="DisplayChange.Successful" /> is
         ///     returned. If it is not possible to change the graphics mode dynamically, the information is stored in the registry
         ///     and <see cref="DisplayChange.Restart" /> is returned.
         ///     <br />
-        ///     If <see cref="ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY" /> is specified and the information could not be
+        ///     If <see cref="ChangeDisplaySettingsFlags.UpdateRegistry" /> is specified and the information could not be
         ///     stored in the registry, the graphics mode is not changed and <see cref="DisplayChange.NotUpdated" /> is returned.
         /// </param>
         /// <param name="lParam">
-        ///     If dwFlags is <see cref="ChangeDisplaySettingsFlags.CDS_VIDEOPARAMETERS" />, <paramref name="lParam" /> is a
+        ///     If dwFlags is <see cref="ChangeDisplaySettingsFlags.VideoParameters" />, <paramref name="lParam" /> is a
         ///     pointer to a VIDEOPARAMETERS structure. Otherwise <paramref name="lParam" /> must be <c>null</c>.
         /// </param>
         [DllImport("user32.dll")]
