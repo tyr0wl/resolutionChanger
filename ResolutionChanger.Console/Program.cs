@@ -42,7 +42,7 @@ namespace ResolutionChanger.Console
                 var devMode = new DevMode();
                 devMode.dmSize = (short)Marshal.SizeOf(devMode);
 
-                if (DisplaySettingsApi.EnumDisplaySettings(monitor.DeviceName, DisplaySettingsApi.EnumCurrentSettings, ref devMode))
+                if (DisplaySettingsApi.EnumDisplaySettings(monitor.DeviceName, DisplaySettingsApi.CurrentSettings, ref devMode))
                 {
                     monitor.CurrentResolution = new Resolution
                     {
@@ -106,7 +106,7 @@ namespace ResolutionChanger.Console
 
             var deviceMode = new DevMode();
 
-            DisplaySettingsApi.EnumDisplaySettings(monitor.DeviceName, DisplaySettingsApi.EnumCurrentSettings, ref deviceMode);
+            DisplaySettingsApi.EnumDisplaySettings(monitor.DeviceName, DisplaySettingsApi.CurrentSettings, ref deviceMode);
 
             deviceMode.dmPelsWidth = monitor.CurrentResolution.Width;
             deviceMode.dmPelsHeight = monitor.CurrentResolution.Height;
@@ -153,7 +153,7 @@ namespace ResolutionChanger.Console
             var deviceMode = new DevMode();
             device.cb = Marshal.SizeOf(device);
 
-            DisplaySettingsApi.EnumDisplaySettings(monitor.DeviceName, DisplaySettingsApi.EnumCurrentSettings, ref deviceMode);
+            DisplaySettingsApi.EnumDisplaySettings(monitor.DeviceName, DisplaySettingsApi.CurrentSettings, ref deviceMode);
             var offsetX = deviceMode.dmPosition.x;
             var offsetY = deviceMode.dmPosition.y;
             deviceMode.dmPosition.x = 0;
@@ -182,7 +182,7 @@ namespace ResolutionChanger.Console
                     device.cb = Marshal.SizeOf(device);
                     var otherDeviceMode = new DevMode();
 
-                    DisplaySettingsApi.EnumDisplaySettings(device.DeviceName, DisplaySettingsApi.EnumCurrentSettings, ref otherDeviceMode);
+                    DisplaySettingsApi.EnumDisplaySettings(device.DeviceName, DisplaySettingsApi.CurrentSettings, ref otherDeviceMode);
 
                     otherDeviceMode.dmPosition.x -= offsetX;
                     otherDeviceMode.dmPosition.y -= offsetY;

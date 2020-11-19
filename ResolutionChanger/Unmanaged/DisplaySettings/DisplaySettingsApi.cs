@@ -5,7 +5,9 @@ namespace ResolutionChanger.Unmanaged.DisplaySettings
 {
     public class DisplaySettingsApi
     {
-        public const int EnumCurrentSettings = -1;
+        public const int CurrentSettings = -1;
+
+        public const int RegistrySettings = -2;
 
         [DllImport("user32.dll")]
         public static extern bool EnumDisplaySettings(string deviceName, int modeNum, ref DevMode devMode);
