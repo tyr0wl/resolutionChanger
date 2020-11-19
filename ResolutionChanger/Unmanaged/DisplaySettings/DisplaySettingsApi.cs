@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 
-namespace ResolutionChanger.Unmanaged
+namespace ResolutionChanger.Unmanaged.DisplaySettings
 {
-    public class User32
+    public class DisplaySettingsApi
     {
         public const int EnumCurrentSettings = -1;
 
@@ -17,8 +17,7 @@ namespace ResolutionChanger.Unmanaged
         public static extern DisplayChange ChangeDisplaySettingsEx(string lpszDeviceName, ref DevMode lpDevMode, IntPtr hwnd, ChangeDisplaySettingsFlags dwflags, IntPtr lParam);
 
         [DllImport("user32.dll")]
-        // A signature for ChangeDisplaySettingsEx with a DEVMODE struct as the second parameter won't allow you to pass in IntPtr.Zero, so create an overload
+        // A signature for ChangeDisplaySettingsEx with a DevMode struct as the second parameter won't allow you to pass in IntPtr.Zero, so create an overload
         public static extern DisplayChange ChangeDisplaySettingsEx(string lpszDeviceName, IntPtr lpDevMode, IntPtr hwnd, ChangeDisplaySettingsFlags dwflags, IntPtr lParam);
-
     }
 }

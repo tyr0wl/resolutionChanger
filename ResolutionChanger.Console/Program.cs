@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using ResolutionChanger.Unmanaged;
+using ResolutionChanger.Unmanaged.DisplaySettings;
 using SystemConsole = System.Console;
 
 namespace ResolutionChanger.Console
@@ -19,7 +20,7 @@ namespace ResolutionChanger.Console
             {
                 // User32.EnumDisplayDevices only fills displayDevice with the settings for the provided iDevNum.
                 // In order to get all devices we need to call User32.EnumDisplayDevices with increasing iDevNums until it returns false.
-                for (uint id = 0; User32.EnumDisplayDevices(null, id, ref displayDevice, 0); id++)
+                for (uint id = 0; DisplaySettingsApi.EnumDisplayDevices(null, id, ref displayDevice, 0); id++)
                 {
                     monitors.Add(new Monitor
                     {
@@ -41,7 +42,7 @@ namespace ResolutionChanger.Console
                 var devMode = new DevMode();
                 devMode.dmSize = (short)Marshal.SizeOf(devMode);
 
-                if (User32.EnumDisplaySettings(monitor.DeviceName, User32.EnumCurrentSettings, ref devMode))
+                if (DisplaySettingsApi.EnumDisplaySettings(monitor.DeviceName, DisplaySettingsApi.EnumCurrentSettings, ref devMode))
                 {
                     monitor.CurrentResolution = new Resolution
                     {
@@ -60,7 +61,7 @@ namespace ResolutionChanger.Console
                 // User32.EnumDisplaySettings only fills devMode with the settings for the provided modeNum.
                 // In order to get all supported resolutions for a monitor we need to call User32.EnumDisplaySettings with increasing modeNums until it returns false.
                 var modeNum = 0;
-                while (User32.EnumDisplaySettings(monitor.DeviceName, modeNum, ref devMode))
+                while (DisplaySettingsApi.EnumDisplaySettings(monitor.DeviceName, modeNum, ref devMode))
                 {
                     modeNum++;
                     monitor.SupportedResolutions.Add(new Resolution
@@ -83,10 +84,13 @@ namespace ResolutionChanger.Console
             //    Frequency = 120,
             //};
             //secondMonitor.Position = new Point { X = -1920, Y = 1440 - 1080 };
+            //secondMonitor.IsActive = false;
+            //Update(secondMonitor);
+
             secondMonitor.IsActive = false;
             secondMonitor.CurrentResolution = new Resolution { Width = 1920, Height = 1080, Frequency = 120 };
             secondMonitor.Position = new Point { X = -secondMonitor.CurrentResolution.Width, Y = primaryMonitor.Position.Y - secondMonitor.Position.Y };
-            Update(secondMonitor);
+            //Update(secondMonitor);
 
             //SetAsPrimaryMonitor(secondMonitor);
             //Deactivate(secondMonitor);
@@ -102,7 +106,7 @@ namespace ResolutionChanger.Console
 
             var deviceMode = new DevMode();
 
-            User32.EnumDisplaySettings(monitor.DeviceName, User32.EnumCurrentSettings, ref deviceMode);
+            DisplaySettingsApi.EnumDisplaySettings(monitor.DeviceName, DisplaySettingsApi.EnumCurrentSettings, ref deviceMode);
 
             deviceMode.dmPelsWidth = monitor.CurrentResolution.Width;
             deviceMode.dmPelsHeight = monitor.CurrentResolution.Height;
@@ -110,7 +114,7 @@ namespace ResolutionChanger.Console
             deviceMode.dmPosition.x = monitor.Position.X;
             deviceMode.dmPosition.y = monitor.Position.Y;
 
-            var result = User32.ChangeDisplaySettingsEx(
+            var result = DisplaySettingsApi.ChangeDisplaySettingsEx(
                 monitor.DeviceName,
                 ref deviceMode,
                 (IntPtr)null,
@@ -119,7 +123,7 @@ namespace ResolutionChanger.Console
 
             if (result == DisplayChange.Successful)
             {
-                User32.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.CDS_NONE, (IntPtr)null);
+                DisplaySettingsApi.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.CDS_NONE, (IntPtr)null);
             }
         }
 
@@ -136,10 +140,10 @@ namespace ResolutionChanger.Console
 
             deleteScreenMode.dmSize = (short)Marshal.SizeOf(deleteScreenMode); 
             
-            var result = User32.ChangeDisplaySettingsEx(monitor.DeviceName, ref deleteScreenMode, IntPtr.Zero, ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY, IntPtr.Zero);
+            var result = DisplaySettingsApi.ChangeDisplaySettingsEx(monitor.DeviceName, ref deleteScreenMode, IntPtr.Zero, ChangeDisplaySettingsFlags.CDS_UPDATEREGISTRY, IntPtr.Zero);
             if (result == DisplayChange.Successful)
             {
-                User32.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.CDS_NONE, (IntPtr)null);
+                DisplaySettingsApi.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.CDS_NONE, (IntPtr)null);
             }
         }
 
@@ -149,13 +153,13 @@ namespace ResolutionChanger.Console
             var deviceMode = new DevMode();
             device.cb = Marshal.SizeOf(device);
 
-            User32.EnumDisplaySettings(monitor.DeviceName, User32.EnumCurrentSettings, ref deviceMode);
+            DisplaySettingsApi.EnumDisplaySettings(monitor.DeviceName, DisplaySettingsApi.EnumCurrentSettings, ref deviceMode);
             var offsetX = deviceMode.dmPosition.x;
             var offsetY = deviceMode.dmPosition.y;
             deviceMode.dmPosition.x = 0;
             deviceMode.dmPosition.y = 0;
 
-            var result = User32.ChangeDisplaySettingsEx(
+            var result = DisplaySettingsApi.ChangeDisplaySettingsEx(
                 monitor.DeviceName,
                 ref deviceMode,
                 (IntPtr)null,
@@ -171,19 +175,19 @@ namespace ResolutionChanger.Console
             device.cb = Marshal.SizeOf(device);
 
             // Update remaining devices
-            for (uint otherId = 0; User32.EnumDisplayDevices(null, otherId, ref device, 0); otherId++)
+            for (uint otherId = 0; DisplaySettingsApi.EnumDisplayDevices(null, otherId, ref device, 0); otherId++)
             {
                 if (device.StateFlags.HasFlag(DisplayDeviceStateFlags.AttachedToDesktop) && otherId != monitor.Id)
                 {
                     device.cb = Marshal.SizeOf(device);
                     var otherDeviceMode = new DevMode();
 
-                    User32.EnumDisplaySettings(device.DeviceName, User32.EnumCurrentSettings, ref otherDeviceMode);
+                    DisplaySettingsApi.EnumDisplaySettings(device.DeviceName, DisplaySettingsApi.EnumCurrentSettings, ref otherDeviceMode);
 
                     otherDeviceMode.dmPosition.x -= offsetX;
                     otherDeviceMode.dmPosition.y -= offsetY;
 
-                    result = User32.ChangeDisplaySettingsEx(
+                    result = DisplaySettingsApi.ChangeDisplaySettingsEx(
                         device.DeviceName,
                         ref otherDeviceMode,
                         (IntPtr)null,
@@ -200,7 +204,7 @@ namespace ResolutionChanger.Console
             }
 
             // Apply settings
-            User32.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.CDS_NONE, (IntPtr)null);
+            DisplaySettingsApi.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.CDS_NONE, (IntPtr)null);
         }
     }
 }
