@@ -2,6 +2,10 @@ using System.Runtime.InteropServices;
 
 namespace ResolutionChanger.Unmanaged.DisplaySettings
 {
+    /// <summary>
+    ///     The DISPLAY_DEVICE structure receives information about the display device specified by the iDevNum parameter of the <see cref="DisplaySettingsApi.EnumDisplayDevices"/> function (wingdi.h).
+    ///     DISPLAY_DEVICE
+    /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct DisplayDevice
     {

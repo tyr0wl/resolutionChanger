@@ -2,10 +2,20 @@ using System.Runtime.InteropServices;
 
 namespace ResolutionChanger.Unmanaged.DisplaySettings
 {
+    /// <summary>
+    ///     The DEVMODE data structure contains information about the initialization and environment of a printer or a display device.
+    ///     DEVMODE
+    /// </summary>
     [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Ansi)]
     public struct DevMode
     {
+        /// <summary>
+        ///     CCHDEVICENAME
+        /// </summary>
         public const int CchDeviceName = 32;
+        /// <summary>
+        ///     CCHFORMNAME
+        /// </summary>
         public const int CchFormName = 32;
 
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CchDeviceName)] [FieldOffset(0)]
