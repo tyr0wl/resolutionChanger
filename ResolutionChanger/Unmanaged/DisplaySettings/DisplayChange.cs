@@ -1,4 +1,4 @@
-namespace ResolutionChanger.Unmanaged
+namespace ResolutionChanger.Unmanaged.DisplaySettings
 {
     public enum DisplayChange
     {
