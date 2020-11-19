@@ -5,10 +5,10 @@ namespace ResolutionChanger.Unmanaged
     [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Ansi)]
     public struct DevMode
     {
-        public const int CCHDEVICENAME = 32;
-        public const int CCHFORMNAME = 32;
+        public const int CchDeviceName = 32;
+        public const int CchFormName = 32;
 
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CCHDEVICENAME)] [FieldOffset(0)]
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CchDeviceName)] [FieldOffset(0)]
         public string dmDeviceName;
 
         [FieldOffset(32)] public short dmSpecVersion;
@@ -36,7 +36,7 @@ namespace ResolutionChanger.Unmanaged
         [FieldOffset(66)] public short dmTTOption;
         [FieldOffset(68)] public short dmCollate; // See note below!
 
-        [FieldOffset(72)] [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CCHFORMNAME)]
+        [FieldOffset(72)] [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CchFormName)]
         public string dmFormName;
 
         [FieldOffset(102)] public short dmLogPixels;
