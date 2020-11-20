@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using ResolutionChanger.Win32;
 using ResolutionChanger.Win32.DisplayConfig;
+using ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes;
 using ResolutionChanger.Win32.DisplaySettings;
 using SystemConsole = System.Console;
 

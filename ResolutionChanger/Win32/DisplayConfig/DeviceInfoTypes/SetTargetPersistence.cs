@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes
 {
     /// <summary>
     ///     The DISPLAYCONFIG_SET_TARGET_PERSISTENCE structure contains information about setting the display.

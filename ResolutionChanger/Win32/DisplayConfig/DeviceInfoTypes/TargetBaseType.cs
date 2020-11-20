@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes
 {
     /// <summary>
     ///     Specifies base output technology info for a given target ID.

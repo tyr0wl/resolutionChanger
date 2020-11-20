@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes
 {
     /// <summary>
     ///     The DISPLAYCONFIG_TARGET_PREFERRED_MODE structure contains information about the preferred mode of a display.
@@ -10,7 +10,7 @@ namespace ResolutionChanger.Win32.DisplayConfig
     public struct TargetPreferredMode
     {
         /// <summary>
-        ///     A DISPLAYCONFIG_DEVICE_INFO_HEADER structure that contains information about the request for the target preferred mode. The caller should set the <see cref="DeviceInfoHeader.type"/> member of <see cref="DeviceInfoHeader"/> to <see cref="DeviceInfoType.TargetPreferredMode"/> and the <see cref="DeviceInfoHeader.adapterId"/> and <see cref="DeviceInfoHeader.id"/> members of <see cref="DeviceInfoHeader"/> to the target for which the caller wants the preferred mode. The caller should set the <see cref="DeviceInfoHeader.size"/> member of <see cref="DeviceInfoHeader"/> to at least the size of the <see cref="TargetPreferredMode"/> structure.
+        ///     A DISPLAYCONFIG_DEVICE_INFO_HEADER structure that contains information about the request for the target preferred mode. The caller should set the <see cref="DeviceInfoHeader.type"/> member of <see cref="DeviceInfoHeader"/> to <see cref="DeviceInfoType.GetTargetPreferredMode"/> and the <see cref="DeviceInfoHeader.adapterId"/> and <see cref="DeviceInfoHeader.id"/> members of <see cref="DeviceInfoHeader"/> to the target for which the caller wants the preferred mode. The caller should set the <see cref="DeviceInfoHeader.size"/> member of <see cref="DeviceInfoHeader"/> to at least the size of the <see cref="TargetPreferredMode"/> structure.
         /// </summary>
         [MarshalAs(UnmanagedType.Struct)] public DeviceInfoHeader header;
 

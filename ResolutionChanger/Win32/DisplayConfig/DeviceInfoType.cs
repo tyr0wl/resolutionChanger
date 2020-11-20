@@ -1,3 +1,5 @@
+using ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes;
+
 namespace ResolutionChanger.Win32.DisplayConfig
 {
     /// <summary>

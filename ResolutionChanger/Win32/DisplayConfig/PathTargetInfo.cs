@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+using ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes;
 
 namespace ResolutionChanger.Win32.DisplayConfig
 {

@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
 using ResolutionChanger.Win32.DisplaySettings;
 
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes
 {
     /// <summary>
     ///     The DISPLAYCONFIG_SOURCE_DEVICE_NAME structure contains the GDI device name for the source or view.
