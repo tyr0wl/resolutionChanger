@@ -77,6 +77,20 @@ namespace ResolutionChanger.Win32.DisplayConfig
         public static extern int DisplayConfigGetDeviceInfo(ref TargetBaseType requestPacket);
 
         /// <summary>
+        ///     The <see cref="DisplayConfigGetDeviceInfo(ref SupportVirtualResolution)" /> function retrieves display configuration information about the
+        ///     device.
+        /// </summary>
+        /// <param name="requestPacket">
+        ///     A pointer to a <see cref="SupportVirtualResolution" /> structure. The <see cref="SupportVirtualResolution.header" /> member contains
+        ///     information about the request, which includes the packet type in the <see cref="DeviceInfoHeader.type" /> member.
+        ///     The type and size of additional data that
+        ///     <see cref="DisplayConfigGetDeviceInfo(ref SupportVirtualResolution)" /> returns after
+        ///     the <see cref="SupportVirtualResolution.header" /> structure depend on the packet type.
+        /// </param>
+        [DllImport("user32.dll")]
+        public static extern int DisplayConfigGetDeviceInfo(ref SupportVirtualResolution requestPacket);
+        
+        /// <summary>
         ///     The <see cref="GetDisplayConfigBufferSizes" /> function retrieves the size of the buffers that are required to call
         ///     the <see cref="QueryDisplayConfig" /> function.
         /// </summary>

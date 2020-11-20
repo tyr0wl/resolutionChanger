@@ -47,9 +47,11 @@ namespace ResolutionChanger.Win32.DisplayConfig
         GetTargetBaseType = 6,
 
         /// <summary>
+        ///     Specifies the state of virtual mode support. If the <see cref="DisplayConfigApi.DisplayConfigGetDeviceInfo(ref DeviceInfoTypes.SupportVirtualResolution)"/> function is successful, <see cref="DisplayConfigApi.DisplayConfigGetDeviceInfo(ref DeviceInfoTypes.SupportVirtualResolution)"/> returns virtual mode support information in the <see cref="DeviceInfoTypes.SupportVirtualResolution"/> structure.
+        ///     Supported starting in Windows 10.
         ///     DISPLAYCONFIG_DEVICE_INFO_GET_SUPPORT_VIRTUAL_RESOLUTION
         /// </summary>
-        DISPLAYCONFIG_DEVICE_INFO_GET_SUPPORT_VIRTUAL_RESOLUTION = 7,
+        SupportVirtualResolution = 7,
 
         /// <summary>
         ///     DISPLAYCONFIG_DEVICE_INFO_SET_SUPPORT_VIRTUAL_RESOLUTION
