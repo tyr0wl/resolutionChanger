@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using ResolutionChanger.Win32;
+using ResolutionChanger.Win32.DisplayConfig;
 using ResolutionChanger.Win32.DisplaySettings;
 using SystemConsole = System.Console;
 
@@ -12,6 +14,7 @@ namespace ResolutionChanger.Console
     {
         private static void Main(string[] args)
         {
+            var friendlyNames = GetAllMonitorsFriendlyNames().ToList();
             var monitors = new List<Monitor>();
 
             var displayDevice = new DisplayDevice();
@@ -205,6 +208,95 @@ namespace ResolutionChanger.Console
 
             // Apply settings
             DisplaySettingsApi.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.None, (IntPtr)null);
+        }
+
+        private static TargetDeviceName GetTargetDeviceName(LuId adapterId, uint targetId)
+        {
+            var deviceName = new TargetDeviceName
+            {
+                header =
+                {
+                    size = (uint)Marshal.SizeOf(typeof (TargetDeviceName)),
+                    adapterId = adapterId,
+                    id = targetId,
+                    type = DeviceInfoType.GetTargetName
+                }
+            };
+
+            var error = DisplayConfigApi.DisplayConfigGetDeviceInfo(ref deviceName);
+            if (error != (int) Win32Status.ErrorSuccess)
+            {
+                throw new Win32Exception(error);
+            }
+
+            return deviceName;
+        }
+
+        private static IEnumerable<string> GetAllMonitorsFriendlyNames()
+        {
+            var error = DisplayConfigApi.GetDisplayConfigBufferSizes(QueryDeviceConfigFlags.AllPaths, out var pathCount, out var modeCount);
+            if (error != (int)Win32Status.ErrorSuccess)
+            {
+                throw new Win32Exception(error);
+            }
+
+            var displayPaths = new PathInfo[pathCount];
+            var displayModes = new ModeInfo[modeCount];
+            error = DisplayConfigApi.QueryDisplayConfig(QueryDeviceConfigFlags.AllPaths, ref pathCount, displayPaths, ref modeCount, displayModes, IntPtr.Zero);
+            
+            if (error != (int)Win32Status.ErrorSuccess)
+            {
+                throw new Win32Exception(error);
+            }
+
+            var availableDisplayPaths = displayPaths.Where(displayPath => displayPath.targetInfo.targetAvailable).GroupBy(info => (info.targetInfo.adapterId, info.targetInfo.id));
+            foreach (var availableDisplayPath in availableDisplayPaths)
+            {
+                var (adapterId, id) = availableDisplayPath.Key;
+                yield return GetTargetDeviceName(adapterId, id).monitorFriendlyDeviceName;
+            }
+        }
+
+        /*
+         * Gets GDI Device name from Source (e.g. \\.\DISPLAY4).
+        */
+        public static SourceDeviceName GetGdiDeviceNameFromSource(LuId adapterId, uint sourceId)
+        {
+            var deviceName = new SourceDeviceName
+            {
+                header =
+                {
+                    size = (uint)Marshal.SizeOf(typeof (SourceDeviceName)),
+                    adapterId = adapterId,
+                    id = sourceId,
+                    type = DeviceInfoType.GetSourceName
+                }
+            };
+
+            DisplayConfigApi.DisplayConfigGetDeviceInfo(ref deviceName);
+            return deviceName;
+        }
+
+        /*
+            Gets Friendly name from Target (e.g. "SyncMaster")
+            Gets Device Path from Target
+            e.g. \\?\DISPLAY#SAM0304#5&9a89472&0&UID33554704#{e6f07b5f-ee97-4a90-b076-33f57bf4eaa7}
+        */
+        public TargetDeviceName GetDISPLAYCONFIG_TARGET_DEVICE_NAME(LuId adapterId, uint targetId)
+        {
+            var deviceName = new TargetDeviceName
+            {
+                header =
+                {
+                    size = (uint)Marshal.SizeOf(typeof (TargetDeviceName)),
+                    adapterId = adapterId,
+                    id = targetId,
+                    type = DeviceInfoType.GetTargetName
+                }
+            };
+
+            DisplayConfigApi.DisplayConfigGetDeviceInfo(ref deviceName);
+            return deviceName;
         }
     }
 }
