@@ -54,9 +54,11 @@ namespace ResolutionChanger.Win32.DisplayConfig
         GetSupportVirtualResolution = 7,
 
         /// <summary>
+        ///     Specifies how to set the state of virtual mode support. If the <see cref="DisplayConfigApi.DisplayConfigGetDeviceInfo(ref SupportVirtualResolution)"/> function is successful, <see cref="DisplayConfigApi.DisplayConfigGetDeviceInfo(ref SupportVirtualResolution)"/> uses info in the <see cref="SupportVirtualResolution"/> structure to change the state of virtual mode support.
+        ///     Supported starting in Windows 10.
         ///     DISPLAYCONFIG_DEVICE_INFO_SET_SUPPORT_VIRTUAL_RESOLUTION
         /// </summary>
-        DISPLAYCONFIG_DEVICE_INFO_SET_SUPPORT_VIRTUAL_RESOLUTION = 8,
+        SetSupportVirtualResolution = 8,
 
         /// <summary>
         ///     DISPLAYCONFIG_DEVICE_INFO_GET_ADVANCED_COLOR_INFO
