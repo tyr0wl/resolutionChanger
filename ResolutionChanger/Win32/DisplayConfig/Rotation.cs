@@ -34,12 +34,5 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     DISPLAYCONFIG_ROTATION_ROTATE270
         /// </summary>
         Rotate270 = 4,
-
-        /// <summary>
-        ///     Forces this enumeration to compile to 32 bits in size. Without this value, some compilers would allow this
-        ///     enumeration to compile to a size other than 32 bits. You should not use this value.
-        ///     DISPLAYCONFIG_ROTATION_FORCE_UINT32
-        /// </summary>
-        ForceUint32 = 0xFFFFFFFF
     }
 }

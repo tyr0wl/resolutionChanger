@@ -9,6 +9,8 @@ namespace ResolutionChanger.Win32.DisplayConfig
     /// </summary>
     public enum DeviceInfoType : uint
     {
+        None = 0,
+
         /// <summary>
         ///     Specifies the source name of the display device. If the <see cref="DisplayConfigApi.DisplayConfigGetDeviceInfo(ref SourceDeviceName)"/> function is successful, <see cref="DisplayConfigApi.DisplayConfigGetDeviceInfo(ref SourceDeviceName)"/> returns the source name in the <see cref="SourceDeviceName"/> structure.
         ///     DISPLAYCONFIG_DEVICE_INFO_GET_SOURCE_NAME
@@ -69,10 +71,5 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     DISPLAYCONFIG_DEVICE_INFO_SET_ADVANCED_COLOR_STATE
         /// </summary>
         SetAdvancedColorState = 10,
-
-        /// <summary>
-        ///     DISPLAYCONFIG_DEVICE_INFO_FORCE_UINT32
-        /// </summary>
-        DISPLAYCONFIG_DEVICE_INFO_FORCE_UINT32 = 0xFFFFFFFF
     }
 }

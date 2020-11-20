@@ -8,6 +8,8 @@ namespace ResolutionChanger.Win32.DisplaySettings
     [Flags]
     public enum DisplayDeviceStateFlags
     {
+        None = 0,
+
         /// <summary>
         ///     The device is part of the desktop.
         ///     DISPLAY_DEVICE_ATTACHED_TO_DESKTOP

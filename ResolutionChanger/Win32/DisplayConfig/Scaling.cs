@@ -7,6 +7,8 @@ namespace ResolutionChanger.Win32.DisplayConfig
     /// </summary>
     public enum Scaling : uint
     {
+        None = 0,
+
         /// <summary>
         ///     Indicates the identity transformation; the source content is presented with no change. This transformation is
         ///     available only if the path's source mode has the same spatial resolution as the path's target mode.
@@ -51,12 +53,5 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     DISPLAYCONFIG_SCALING_PREFERRED
         /// </summary>
         Preferred = 128,
-
-        /// <summary>
-        ///     Forces this enumeration to compile to 32 bits in size. Without this value, some compilers would allow this
-        ///     enumeration to compile to a size other than 32 bits. You should not use this value.
-        ///     DISPLAYCONFIG_SCALING_FORCE_UINT32
-        /// </summary>
-        ForceUint32 = 0xFFFFFFFF
     }
 }

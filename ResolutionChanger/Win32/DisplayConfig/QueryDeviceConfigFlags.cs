@@ -5,6 +5,8 @@ namespace ResolutionChanger.Win32.DisplayConfig
     /// </summary>
     public enum QueryDeviceConfigFlags : uint
     {
+        None = 0,
+
         /// <summary>
         ///     The caller requests the table sizes to hold all the possible path combinations.
         ///     QDC_ALL_PATHS

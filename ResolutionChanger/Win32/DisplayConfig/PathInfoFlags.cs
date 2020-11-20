@@ -8,9 +8,6 @@ namespace ResolutionChanger.Win32.DisplayConfig
     [Flags]
     public enum PathInfoFlags : uint
     {
-        /// <summary>
-        ///     Invalid according the documentation
-        /// </summary>
         None = 0,
 
         /// <summary>

@@ -8,9 +8,6 @@ namespace ResolutionChanger.Win32.DisplayConfig
     [Flags]
     public enum SourceInfoFlags : uint
     {
-        /// <summary>
-        ///     Invalid according to the documentation.
-        /// </summary>
         None = 0,
 
         /// <summary>

@@ -7,6 +7,8 @@ namespace ResolutionChanger.Win32.DisplayConfig
     /// </summary>
     public enum ModeInfoType : uint
     {
+        None = 0,
+
         /// <summary>
         ///     Indicates that the <see cref="ModeInfo" /> structure contains source mode information.
         ///     DISPLAYCONFIG_MODE_INFO_TYPE_SOURCE
@@ -21,16 +23,10 @@ namespace ResolutionChanger.Win32.DisplayConfig
 
         /// <summary>
         ///     Indicates that the <see cref="ModeInfo" /> structure contains a valid <see cref="DesktopImageInfo" />
-        ///     structure (member: <see cref="ModeInfo.DesktopImageInfo" />. Supported starting in Windows 10.
+        ///     structure (member: <see cref="ModeInfo.desktopImageInfo" />.
+        ///     Supported starting in Windows 10.
         ///     DISPLAYCONFIG_MODE_INFO_TYPE_DESKTOP_IMAGE
         /// </summary>
         DesktopImage = 3,
-
-        /// <summary>
-        ///     Forces this enumeration to compile to 32 bits in size. Without this value, some compilers would allow this
-        ///     enumeration to compile to a size other than 32 bits. You should not use this value.
-        ///     DISPLAYCONFIG_MODE_INFO_TYPE_FORCE_UINT32
-        /// </summary>
-        ForceUint32 = 0xFFFFFFFF
     }
 }

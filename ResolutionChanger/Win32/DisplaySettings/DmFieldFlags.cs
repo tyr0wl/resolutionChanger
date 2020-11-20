@@ -5,6 +5,8 @@ namespace ResolutionChanger.Win32.DisplaySettings
     [Flags]
     public enum DmFieldFlags
     {
+        None = 0,
+
         /// <summary>
         ///     DM_ORIENTATION
         /// </summary>
