@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes
+namespace ResolutionChanger.Win32.DisplayConfig
 {
     /// <summary>
     ///     The DISPLAYCONFIG_TARGET_MODE structure describes a display path target mode.
