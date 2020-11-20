@@ -22,7 +22,7 @@ namespace ResolutionChanger.Win32.DisplayConfig
         /// <summary>
         ///     A value from the DISPLAYCONFIG_PIXELFORMAT enumeration that specifies the pixel format of the source mode.
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)] public DisplayConfigPixelFormat pixelFormat;
+        [MarshalAs(UnmanagedType.U4)] public PixelFormat pixelFormat;
 
         /// <summary>
         ///     A POINTL structure that specifies the position in the desktop coordinate space of the upper-left corner of this source surface. The source surface that is located at (0, 0) is always the primary source surface.

@@ -4,7 +4,7 @@ namespace ResolutionChanger.Win32.DisplayConfig
     ///     The DISPLAYCONFIG_PIXELFORMAT enumeration specifies pixel format in various bits per pixel (BPP) values.
     ///     DISPLAYCONFIG_PIXELFORMAT enumeration (wingdi.h)
     /// </summary>
-    public enum DisplayConfigPixelFormat : uint
+    public enum PixelFormat : uint
     {
         None = 0,
 
