@@ -40,7 +40,7 @@ namespace ResolutionChanger.Win32.DisplayConfig
         SetTargetPersistence = 5,
 
         /// <summary>
-        ///     Specifies how to set the base output technology for a given target ID. If the DisplayConfigGetDeviceInfo function is successful, DisplayConfigGetDeviceInfo returns base output technology info in the DISPLAYCONFIG_TARGET_BASE_TYPE structure.
+        ///     Specifies how to set the base output technology for a given target ID. If the <see cref="DisplayConfigApi.DisplayConfigGetDeviceInfo(ref TargetBaseType)"/> function is successful, <see cref="DisplayConfigApi.DisplayConfigGetDeviceInfo(ref TargetBaseType)"/> returns base output technology info in the DISPLAYCONFIG_TARGET_BASE_TYPE structure.
         ///     Supported by WDDM 1.3 and later user-mode display drivers running on Windows 8.1 and later.
         ///     DISPLAYCONFIG_DEVICE_INFO_GET_TARGET_BASE_TYPE
         /// </summary>
