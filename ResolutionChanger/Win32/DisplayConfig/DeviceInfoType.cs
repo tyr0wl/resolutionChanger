@@ -63,12 +63,12 @@ namespace ResolutionChanger.Win32.DisplayConfig
         /// <summary>
         ///     DISPLAYCONFIG_DEVICE_INFO_GET_ADVANCED_COLOR_INFO
         /// </summary>
-        DISPLAYCONFIG_DEVICE_INFO_GET_ADVANCED_COLOR_INFO = 9,
+        GetAdvancedColorInfo = 9,
 
         /// <summary>
         ///     DISPLAYCONFIG_DEVICE_INFO_SET_ADVANCED_COLOR_STATE
         /// </summary>
-        DISPLAYCONFIG_DEVICE_INFO_SET_ADVANCED_COLOR_STATE = 10,
+        SetAdvancedColorState = 10,
 
         /// <summary>
         ///     DISPLAYCONFIG_DEVICE_INFO_FORCE_UINT32
