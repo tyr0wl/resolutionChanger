@@ -27,6 +27,6 @@ namespace ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes
         /// <summary>
         ///     A DISPLAYCONFIG_TARGET_MODE structure that describes the best target mode for the monitor that is connected to the specified target.
         /// </summary>
-        [MarshalAs(UnmanagedType.Struct)] public readonly TargetMode targetMode;
+        [MarshalAs(UnmanagedType.Struct)] public TargetMode targetMode;
     }
 }
