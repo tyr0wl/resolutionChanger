@@ -12,8 +12,8 @@ namespace ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes
         /// <summary>
         ///     A DISPLAYCONFIG_DEVICE_INFO_HEADER structure that contains information about the request for the adapter name. The
         ///     caller should set the <see cref="DeviceInfoHeader.type" /> member of <see cref="DeviceInfoHeader" /> to
-        ///     <see cref="DeviceInfoType.AdapterName" /> and the <see cref="DeviceInfoHeader.adapterId" /> member of
-        ///     cref="DeviceInfoHeader" to the adapter identifier of the adapter for which the caller wants the name. For this
+        ///     <see cref="DeviceInfoType.GetAdapterName" /> and the <see cref="DeviceInfoHeader.adapterId" /> member of
+        ///     <see cref="DeviceInfoHeader"/> to the adapter identifier of the adapter for which the caller wants the name. For this
         ///     request, the caller does not need to set the <see cref="DeviceInfoHeader.id" /> member of
         ///     <see cref="DeviceInfoHeader" />. The caller should set the <see cref="DeviceInfoHeader.size" /> member of
         ///     <see cref="DeviceInfoHeader" /> to at least the size of the <see cref="AdapterName" /> structure.

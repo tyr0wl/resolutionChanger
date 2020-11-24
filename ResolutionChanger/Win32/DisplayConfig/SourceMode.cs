@@ -25,7 +25,8 @@ namespace ResolutionChanger.Win32.DisplayConfig
         [MarshalAs(UnmanagedType.U4)] public PixelFormat pixelFormat;
 
         /// <summary>
-        ///     A POINTL structure that specifies the position in the desktop coordinate space of the upper-left corner of this source surface. The source surface that is located at (0, 0) is always the primary source surface.
+        ///     A POINTL structure that specifies the position in the desktop coordinate space of the upper-left corner of this
+        ///     source surface. The source surface that is located at (0, 0) is always the primary source surface.
         /// </summary>
         [MarshalAs(UnmanagedType.Struct)] public PointL position;
     }

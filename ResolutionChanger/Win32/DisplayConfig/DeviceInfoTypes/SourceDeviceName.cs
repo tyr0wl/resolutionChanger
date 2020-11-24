@@ -13,7 +13,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes
         /// <summary>
         ///     A DISPLAYCONFIG_DEVICE_INFO_HEADER structure that contains information about the request for the source device
         ///     name. The caller should set the <see cref="DeviceInfoHeader.type" /> member of <see cref="DeviceInfoHeader" /> to
-        ///     <see cref="DeviceInfoType.SourceName" /> and the <see cref="DeviceInfoHeader.adapterId" /> and
+        ///     <see cref="DeviceInfoType.GetSourceName" /> and the <see cref="DeviceInfoHeader.adapterId" /> and
         ///     <see cref="DeviceInfoHeader.id" /> members of <see cref="DeviceInfoHeader" /> to the source for which the caller
         ///     wants the source device name. The caller should set the <see cref="DeviceInfoHeader.size" /> member of
         ///     <see cref="DeviceInfoHeader" /> to at least the size of the <see cref="SourceDeviceName" /> structure.

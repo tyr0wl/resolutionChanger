@@ -7,7 +7,8 @@ namespace ResolutionChanger.Win32.DisplayConfig
     public class DisplayConfigApi
     {
         /// <summary>
-        ///     The <see cref="DisplayConfigGetDeviceInfo(ref TargetDeviceName)" /> function retrieves display configuration information about the
+        ///     The <see cref="DisplayConfigGetDeviceInfo(ref TargetDeviceName)" /> function retrieves display configuration
+        ///     information about the
         ///     device.
         /// </summary>
         /// <param name="requestPacket">
@@ -21,7 +22,8 @@ namespace ResolutionChanger.Win32.DisplayConfig
         public static extern int DisplayConfigGetDeviceInfo(ref TargetDeviceName requestPacket);
 
         /// <summary>
-        ///     The <see cref="DisplayConfigGetDeviceInfo(ref SourceDeviceName)" /> function retrieves display configuration information about the
+        ///     The <see cref="DisplayConfigGetDeviceInfo(ref SourceDeviceName)" /> function retrieves display configuration
+        ///     information about the
         ///     device.
         /// </summary>
         /// <param name="requestPacket">
@@ -35,11 +37,13 @@ namespace ResolutionChanger.Win32.DisplayConfig
         public static extern int DisplayConfigGetDeviceInfo(ref SourceDeviceName requestPacket);
 
         /// <summary>
-        ///     The <see cref="DisplayConfigGetDeviceInfo(ref TargetPreferredMode)" /> function retrieves display configuration information about the
+        ///     The <see cref="DisplayConfigGetDeviceInfo(ref TargetPreferredMode)" /> function retrieves display configuration
+        ///     information about the
         ///     device.
         /// </summary>
         /// <param name="requestPacket">
-        ///     A pointer to a <see cref="TargetPreferredMode" /> structure. The <see cref="TargetBaseType.header" /> member contains
+        ///     A pointer to a <see cref="TargetPreferredMode" /> structure. The <see cref="TargetBaseType.header" /> member
+        ///     contains
         ///     information about the request, which includes the packet type in the <see cref="DeviceInfoHeader.type" /> member.
         ///     The type and size of additional data that
         ///     <see cref="DisplayConfigGetDeviceInfo(ref TargetPreferredMode)" /> returns after
@@ -49,7 +53,8 @@ namespace ResolutionChanger.Win32.DisplayConfig
         public static extern int DisplayConfigGetDeviceInfo(ref TargetPreferredMode requestPacket);
 
         /// <summary>
-        ///     The <see cref="DisplayConfigGetDeviceInfo(ref AdapterName)" /> function retrieves display configuration information about the
+        ///     The <see cref="DisplayConfigGetDeviceInfo(ref AdapterName)" /> function retrieves display configuration information
+        ///     about the
         ///     device.
         /// </summary>
         /// <param name="requestPacket">
@@ -63,7 +68,8 @@ namespace ResolutionChanger.Win32.DisplayConfig
         public static extern int DisplayConfigGetDeviceInfo(ref AdapterName requestPacket);
 
         /// <summary>
-        ///     The <see cref="DisplayConfigGetDeviceInfo(ref TargetBaseType)" /> function retrieves display configuration information about the
+        ///     The <see cref="DisplayConfigGetDeviceInfo(ref TargetBaseType)" /> function retrieves display configuration
+        ///     information about the
         ///     device.
         /// </summary>
         /// <param name="requestPacket">
@@ -77,11 +83,13 @@ namespace ResolutionChanger.Win32.DisplayConfig
         public static extern int DisplayConfigGetDeviceInfo(ref TargetBaseType requestPacket);
 
         /// <summary>
-        ///     The <see cref="DisplayConfigGetDeviceInfo(ref SupportVirtualResolution)" /> function retrieves display configuration information about the
+        ///     The <see cref="DisplayConfigGetDeviceInfo(ref SupportVirtualResolution)" /> function retrieves display
+        ///     configuration information about the
         ///     device.
         /// </summary>
         /// <param name="requestPacket">
-        ///     A pointer to a <see cref="SupportVirtualResolution" /> structure. The <see cref="SupportVirtualResolution.header" /> member contains
+        ///     A pointer to a <see cref="SupportVirtualResolution" /> structure. The
+        ///     <see cref="SupportVirtualResolution.header" /> member contains
         ///     information about the request, which includes the packet type in the <see cref="DeviceInfoHeader.type" /> member.
         ///     The type and size of additional data that
         ///     <see cref="DisplayConfigGetDeviceInfo(ref SupportVirtualResolution)" /> returns after
@@ -89,7 +97,7 @@ namespace ResolutionChanger.Win32.DisplayConfig
         /// </param>
         [DllImport("user32.dll")]
         public static extern int DisplayConfigGetDeviceInfo(ref SupportVirtualResolution requestPacket);
-        
+
         /// <summary>
         ///     The <see cref="GetDisplayConfigBufferSizes" /> function retrieves the size of the buffers that are required to call
         ///     the <see cref="QueryDisplayConfig" /> function.

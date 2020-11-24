@@ -1,5 +1,5 @@
 ﻿namespace ResolutionChanger
-{   
+{
     public struct Point
     {
         public int X { get; set; }
