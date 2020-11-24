@@ -7,5 +7,10 @@ namespace ResolutionChanger.Win32
     {
         public int x;
         public int y;
+
+        public override string ToString()
+        {
+            return $"{{{GetType().Name} {nameof(x)}: {x}, {nameof(y)}: {y}}}";
+        }
     }
 }

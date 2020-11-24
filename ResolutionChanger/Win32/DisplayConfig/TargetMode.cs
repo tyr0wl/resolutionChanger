@@ -13,5 +13,10 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     A DISPLAYCONFIG_VIDEO_SIGNAL_INFO structure that contains a detailed description of the current target mode.
         /// </summary>
         [MarshalAs(UnmanagedType.Struct)] public readonly VideoSignalInfo targetVideoSignalInfo;
+
+        public override string ToString()
+        {
+            return $"{GetType().Name} {{{targetVideoSignalInfo}}}";
+        }
     }
 }

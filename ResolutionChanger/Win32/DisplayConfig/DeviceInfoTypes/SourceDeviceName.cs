@@ -27,5 +27,10 @@ namespace ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes
         /// </summary>
         [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
         public string viewGdiDeviceName;
+
+        public override string ToString()
+        {
+            return $"{GetType().Name}: {viewGdiDeviceName}";
+        }
     }
 }

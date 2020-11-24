@@ -29,5 +29,11 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     source surface. The source surface that is located at (0, 0) is always the primary source surface.
         /// </summary>
         [MarshalAs(UnmanagedType.Struct)] public PointL position;
+
+        public override string ToString()
+        {
+            var pixelFormatString = pixelFormat.ToString().Replace(nameof(PixelFormat), string.Empty);
+            return $"{{{GetType().Name} {width}x{height},{pixelFormatString},{position}}}";
+        }
     }
 }

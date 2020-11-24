@@ -44,5 +44,10 @@ namespace ResolutionChanger.Win32.DisplayConfig
         {
             return !left.Equals(right);
         }
+
+        public override string ToString()
+        {
+            return $"{GetType().Name} {{{LowPart},{HighPart}}}";
+        }
     }
 }

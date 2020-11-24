@@ -23,5 +23,10 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     A bitwise OR of flag values that indicates the state of the path.
         /// </summary>
         public PathInfoFlags flags;
+
+        public override string ToString()
+        {
+            return $"{{path {sourceInfo},{targetInfo},{flags}}}";
+        }
     }
 }

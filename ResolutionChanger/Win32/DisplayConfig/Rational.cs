@@ -19,5 +19,10 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     The denominator of the frequency fraction.
         /// </summary>
         public uint Denominator;
+
+        public override string ToString()
+        {
+            return $"{{{GetType().Name} {Numerator},{Denominator}}}";
+        }
     }
 }

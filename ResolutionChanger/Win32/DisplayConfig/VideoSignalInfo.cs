@@ -59,5 +59,10 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     see the <see cref="ScanLineOrdering" /> enumerated type.
         /// </summary>
         [MarshalAs(UnmanagedType.U4)] public readonly ScanLineOrdering scanLineOrdering;
+
+        public override string ToString()
+        {
+            return $"{{video {videoStandard},hSync:{hSyncFreq},vSync:{vSyncFreq},{scanLineOrdering}}}";
+        }
     }
 }

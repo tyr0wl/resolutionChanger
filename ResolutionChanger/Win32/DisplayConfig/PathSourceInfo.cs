@@ -30,5 +30,11 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     A bitwise OR of flag values that indicates the state of the path.
         /// </summary>
         [MarshalAs(UnmanagedType.U4)] public readonly SourceInfoFlags statusFlags;
+
+        public override string ToString()
+        {
+            var modeIdxString = InvalidModeIdx ? "-" : modeInfoIdx.ToString();
+            return $@"{{source {id},{statusFlags},[{modeIdxString}]}}";
+        }
     }
 }

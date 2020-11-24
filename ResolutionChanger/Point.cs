@@ -7,7 +7,7 @@
 
         public override string ToString()
         {
-            return $"P{ X },{ Y }";
+            return $"{{{nameof(X)}: {X}, {nameof(Y)}: {Y}}}";
         }
     }
 }

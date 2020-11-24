@@ -18,5 +18,10 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     The vertical component of the point or offset.
         /// </summary>
         public uint cy;
+
+        public override string ToString()
+        {
+            return $"{{{nameof(cx)}: {cx}, {nameof(cy)}: {cy}}}";
+        }
     }
 }

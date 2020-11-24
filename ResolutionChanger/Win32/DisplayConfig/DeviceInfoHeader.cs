@@ -34,5 +34,10 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     identifier.
         /// </summary>
         public uint id;
+
+        public override string ToString()
+        {
+            return $"{GetType().Name}: {{{type}, {adapterId}, {id}}}";
+        }
     }
 }
