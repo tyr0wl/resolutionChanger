@@ -34,7 +34,7 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     the <see cref="SourceDeviceName.header" /> structure depend on the packet type.
         /// </param>
         [DllImport("user32.dll")]
-        public static extern int DisplayConfigGetDeviceInfo(ref SourceDeviceName requestPacket);
+        public static extern Win32Status DisplayConfigGetDeviceInfo(ref SourceDeviceName requestPacket);
 
         /// <summary>
         ///     The <see cref="DisplayConfigGetDeviceInfo(ref TargetPreferredMode)" /> function retrieves display configuration
@@ -50,7 +50,7 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     the <see cref="TargetPreferredMode.header" /> structure depend on the packet type.
         /// </param>
         [DllImport("user32.dll")]
-        public static extern int DisplayConfigGetDeviceInfo(ref TargetPreferredMode requestPacket);
+        public static extern Win32Status DisplayConfigGetDeviceInfo(ref TargetPreferredMode requestPacket);
 
         /// <summary>
         ///     The <see cref="DisplayConfigGetDeviceInfo(ref AdapterName)" /> function retrieves display configuration information
@@ -65,7 +65,7 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     the <see cref="AdapterName.header" /> structure depend on the packet type.
         /// </param>
         [DllImport("user32.dll")]
-        public static extern int DisplayConfigGetDeviceInfo(ref AdapterName requestPacket);
+        public static extern Win32Status DisplayConfigGetDeviceInfo(ref AdapterName requestPacket);
 
         /// <summary>
         ///     The <see cref="DisplayConfigGetDeviceInfo(ref TargetBaseType)" /> function retrieves display configuration
