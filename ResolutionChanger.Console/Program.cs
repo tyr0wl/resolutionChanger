@@ -84,6 +84,18 @@ namespace ResolutionChanger.Console
 
         public static void Update(IList<Monitor> monitors)
         {
+            var (paths, modes) = DisplayConfigHelper.GetDisplayConfig();
+
+
+            var pathsString = JsonConvert.SerializeObject(paths, Formatting.Indented);
+            var modesString = JsonConvert.SerializeObject(modes, Formatting.Indented);
+            File.WriteAllText("paths.json", pathsString);
+            File.WriteAllText("modes.json", modesString);
+            if (Win32Status.ErrorSuccess == Win32Status.ErrorSuccess)
+            {
+                //result = DisplayConfigApi.SetDisplayConfig((uint)paths.Length, paths.ToArray(), (uint)displayModesList.Count, displayModesList.ToArray(), SetDisplayConfigFlags.Apply | SetDisplayConfigFlags.UseSuppliedDisplayConfig | SetDisplayConfigFlags.AllowChanges);
+                (paths, modes) = DisplayConfigHelper.GetDisplayConfig();
+            }
         }
 
         private static IList<Monitor> GetMonitors()
