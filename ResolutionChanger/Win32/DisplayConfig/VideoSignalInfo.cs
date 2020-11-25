@@ -7,7 +7,7 @@ namespace ResolutionChanger.Win32.DisplayConfig
     ///     DISPLAYCONFIG_VIDEO_SIGNAL_INFO structure (wingdi.h)
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public readonly struct VideoSignalInfo
+    public struct VideoSignalInfo
     {
         /// <summary>
         ///     The pixel clock rate.
@@ -22,7 +22,7 @@ namespace ResolutionChanger.Win32.DisplayConfig
         /// <summary>
         ///     A DISPLAYCONFIG_RATIONAL structure that represents vertical sync.
         /// </summary>
-        [MarshalAs(UnmanagedType.Struct)] public readonly Rational vSyncFreq;
+        [MarshalAs(UnmanagedType.Struct)] public Rational vSyncFreq;
 
         /// <summary>
         ///     A DISPLAYCONFIG_2DREGION structure that specifies the width and height (in pixels) of the active portion of the

@@ -12,12 +12,12 @@ namespace ResolutionChanger.Win32.DisplayConfig
         /// <summary>
         ///     A DISPLAYCONFIG_PATH_SOURCE_INFO structure that contains the source information for the path.
         /// </summary>
-        [MarshalAs(UnmanagedType.Struct)] public readonly PathSourceInfo sourceInfo;
+        [MarshalAs(UnmanagedType.Struct)] public PathSourceInfo sourceInfo;
 
         /// <summary>
         ///     A DISPLAYCONFIG_PATH_TARGET_INFO structure that contains the target information for the path.
         /// </summary>
-        [MarshalAs(UnmanagedType.Struct)] public readonly PathTargetInfo targetInfo;
+        [MarshalAs(UnmanagedType.Struct)] public PathTargetInfo targetInfo;
 
         /// <summary>
         ///     A bitwise OR of flag values that indicates the state of the path.

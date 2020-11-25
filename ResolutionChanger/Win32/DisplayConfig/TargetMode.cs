@@ -7,12 +7,12 @@ namespace ResolutionChanger.Win32.DisplayConfig
     ///     DISPLAYCONFIG_TARGET_MODE structure (wingdi.h)
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public readonly struct TargetMode
+    public struct TargetMode
     {
         /// <summary>
         ///     A DISPLAYCONFIG_VIDEO_SIGNAL_INFO structure that contains a detailed description of the current target mode.
         /// </summary>
-        [MarshalAs(UnmanagedType.Struct)] public readonly VideoSignalInfo targetVideoSignalInfo;
+        [MarshalAs(UnmanagedType.Struct)] public VideoSignalInfo targetVideoSignalInfo;
 
         public override string ToString()
         {

@@ -1,5 +1,4 @@
 using System.Runtime.InteropServices;
-using ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes;
 
 namespace ResolutionChanger.Win32.DisplayConfig
 {
@@ -8,42 +7,44 @@ namespace ResolutionChanger.Win32.DisplayConfig
     ///     DISPLAYCONFIG_PATH_TARGET_INFO structure (wingdi.h)
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public readonly struct PathTargetInfo
+    public struct PathTargetInfo
     {
+        public const uint ModeIdxInvalid = 0xffffffff;
+
         /// <summary>
         ///     The identifier of the adapter that the path is on.
         /// </summary>
-        [MarshalAs(UnmanagedType.Struct)] public readonly LuId adapterId;
+        [MarshalAs(UnmanagedType.Struct)] public LuId adapterId;
 
         /// <summary>
         ///     The target identifier on the specified adapter that this path relates to.
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)] public readonly uint id;
+        [MarshalAs(UnmanagedType.U4)] public uint id;
 
         /// <summary>
         ///     A valid index into the mode information table that contains the target mode information for this path only when
         ///     DISPLAYCONFIG_PATH_SUPPORT_VIRTUAL_MODE is not set. If target mode information is not available, the value of
         ///     modeInfoIdx is DISPLAYCONFIG_PATH_MODE_IDX_INVALID.
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)] public readonly uint modeInfoIdx;
+        [MarshalAs(UnmanagedType.U4)] public uint modeInfoIdx;
 
         /// <summary>
         ///     The target's connector type. For a list of possible values, see the <see cref="VideoOutputTechnology" /> enumerated
         ///     type.
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)] private readonly VideoOutputTechnology outputTechnology;
+        [MarshalAs(UnmanagedType.U4)] private VideoOutputTechnology outputTechnology;
 
         /// <summary>
         ///     A value that specifies the rotation of the target. For a list of possible values, see the <see cref="Rotation" />
         ///     enumerated type.
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)] private readonly Rotation rotation;
+        [MarshalAs(UnmanagedType.U4)] private Rotation rotation;
 
         /// <summary>
         ///     A value that specifies how the source image is scaled to the target. For a list of possible values, see the
         ///     <see cref="Scaling" /> enumerated type. For more information about scaling, see Scaling the Desktop Image.
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)] private readonly Scaling scaling;
+        [MarshalAs(UnmanagedType.U4)] private Scaling scaling;
 
         /// <summary>
         ///     A DISPLAYCONFIG_RATIONAL structure that specifies the refresh rate of the target. If the caller specifies target
@@ -57,7 +58,7 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     member to the <see cref="ScanLineOrdering.Unspecified" /> value; otherwise,
         ///     <see cref="DisplayConfigApi.SetDisplayConfig" /> fails.
         /// </summary>
-        [MarshalAs(UnmanagedType.Struct)] private readonly Rational refreshRate;
+        [MarshalAs(UnmanagedType.Struct)] private Rational refreshRate;
 
         /// <summary>
         ///     A value that specifies the scan-line ordering of the output on the target. For a list of possible values, see the
@@ -67,7 +68,7 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     case, the caller specifies this value in the <see cref="TargetMode.targetVideoSignalInfo" /> member of the
         ///     <see cref="TargetMode" /> structure.
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)] private readonly ScanLineOrdering scanLineOrdering;
+        [MarshalAs(UnmanagedType.U4)] private ScanLineOrdering scanLineOrdering;
 
         /// <summary>
         ///     A Boolean value that specifies whether the target is available. <c>true</c> indicates that the target is available.
@@ -77,12 +78,12 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     <c>false</c> for an active path. This is typically a transient situation that will change after the operating
         ///     system takes action on the monitor removal.
         /// </summary>
-        [MarshalAs(UnmanagedType.Bool)] public readonly bool targetAvailable;
+        [MarshalAs(UnmanagedType.Bool)] public bool targetAvailable;
 
         /// <summary>
         ///     A bitwise OR of flag values that indicates the status of the target.
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)] public readonly PathTargetInfoFlags statusFlags;
+        [MarshalAs(UnmanagedType.U4)] public PathTargetInfoFlags statusFlags;
 
         public override string ToString()
         {

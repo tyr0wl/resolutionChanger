@@ -8,17 +8,17 @@ namespace ResolutionChanger.Win32.DisplayConfig
     ///     LUID structure (winnt.h)
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public readonly struct LuId : IEquatable<LuId>
+    public struct LuId : IEquatable<LuId>
     {
         /// <summary>
         ///     Specifies a DWORD that contains the unsigned lower numbers of the id.
         /// </summary>
-        public readonly uint LowPart;
+        public uint LowPart;
 
         /// <summary>
         ///     Specifies a LONG that contains the signed high numbers of the id.
         /// </summary>
-        public readonly int HighPart;
+        public int HighPart;
 
         public bool Equals(LuId other)
         {

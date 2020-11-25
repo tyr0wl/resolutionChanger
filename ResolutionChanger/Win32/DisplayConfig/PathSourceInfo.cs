@@ -7,29 +7,29 @@ namespace ResolutionChanger.Win32.DisplayConfig
     ///     DISPLAYCONFIG_PATH_SOURCE_INFO structure (wingdi.h)
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public readonly struct PathSourceInfo
+    public struct PathSourceInfo
     {
         /// <summary>
         ///     The identifier of the adapter that this source information relates to.
         /// </summary>
-        [MarshalAs(UnmanagedType.Struct)] public readonly LuId adapterId;
+        [MarshalAs(UnmanagedType.Struct)] public LuId adapterId;
 
         /// <summary>
         ///     The source identifier on the specified adapter that this path relates to.
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)] public readonly uint id;
+        [MarshalAs(UnmanagedType.U4)] public uint id;
 
         /// <summary>
         ///     A valid index into the mode information table that contains the source mode information for this path only when
         ///     DISPLAYCONFIG_PATH_SUPPORT_VIRTUAL_MODE is not set. If source mode information is not available, the value of
         ///     modeInfoIdx is DISPLAYCONFIG_PATH_MODE_IDX_INVALID.
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)] public readonly uint modeInfoIdx;
+        [MarshalAs(UnmanagedType.U4)] public uint modeInfoIdx;
 
         /// <summary>
         ///     A bitwise OR of flag values that indicates the state of the path.
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)] public readonly SourceInfoFlags statusFlags;
+        [MarshalAs(UnmanagedType.U4)] public SourceInfoFlags statusFlags;
 
         public override string ToString()
         {
