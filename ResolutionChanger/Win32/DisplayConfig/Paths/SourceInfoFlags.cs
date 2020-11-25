@@ -1,6 +1,6 @@
 using System;
 
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.Paths
 {
     /// <summary>
     ///     Corresponds to UINT32 field statusFlags of the <see cref="PathSourceInfo"/> structure.

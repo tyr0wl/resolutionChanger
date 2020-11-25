@@ -1,6 +1,7 @@
 using System.Runtime.InteropServices;
+using ResolutionChanger.Win32.DisplayConfig.Data;
 
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.Modes
 {
     /// <summary>
     ///     The DISPLAYCONFIG_VIDEO_SIGNAL_INFO structure contains information about the video signal for a display.

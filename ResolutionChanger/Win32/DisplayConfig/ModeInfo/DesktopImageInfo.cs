@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.ModeInfo
 {
     /// <summary>
     ///     The DISPLAYCONFIG_DESKTOP_IMAGE_INFO structure contains information about the image displayed on the desktop.

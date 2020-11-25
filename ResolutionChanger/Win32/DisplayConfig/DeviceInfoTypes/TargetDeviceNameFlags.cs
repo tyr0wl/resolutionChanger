@@ -1,6 +1,6 @@
 using System;
 
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes
 {
     /// <summary>
     ///     The DISPLAYCONFIG_TARGET_DEVICE_NAME_FLAGS structure contains information about a target device.

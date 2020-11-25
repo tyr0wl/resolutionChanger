@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes;
+using ResolutionChanger.Win32.DisplayConfig.ModeInfo;
+using ResolutionChanger.Win32.DisplayConfig.Paths;
 
 namespace ResolutionChanger.Win32.DisplayConfig
 {
@@ -167,7 +169,7 @@ namespace ResolutionChanger.Win32.DisplayConfig
         public static extern int QueryDisplayConfig(
             QueryDeviceConfigFlags flags,
             ref uint numPathArrayElements, [Out] PathInfo[] pathArray,
-            ref uint numModeInfoArrayElements, [Out] ModeInfo[] modeInfoArray,
+            ref uint numModeInfoArrayElements, [Out] ModeInfo.ModeInfo[] modeInfoArray,
             IntPtr currentTopologyId
         );
 
@@ -218,7 +220,7 @@ namespace ResolutionChanger.Win32.DisplayConfig
         public static extern int QueryDisplayConfig(
             QueryDeviceConfigFlags flags,
             ref uint numPathArrayElements, [Out] PathInfo[] pathArray,
-            ref uint numModeInfoArrayElements, [Out] ModeInfo[] modeInfoArray,
+            ref uint numModeInfoArrayElements, [Out] ModeInfo.ModeInfo[] modeInfoArray,
             [Out] out TopologyId currentTopologyId
         );
 
@@ -243,7 +245,7 @@ namespace ResolutionChanger.Win32.DisplayConfig
         [DllImport("user32.dll")]
         public static extern Win32Status SetDisplayConfig(
             [In] uint numPathArrayElements, [In] PathInfo[] pathArray,
-            [In] uint numModeInfoArrayElements, [In] ModeInfo[] modeInfoArray,
+            [In] uint numModeInfoArrayElements, [In] ModeInfo.ModeInfo[] modeInfoArray,
             [In] SetDisplayConfigFlags flags
         );
     }

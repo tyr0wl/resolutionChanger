@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.Data
 {
     /// <summary>
     ///     Describes a local identifier for an adapter.

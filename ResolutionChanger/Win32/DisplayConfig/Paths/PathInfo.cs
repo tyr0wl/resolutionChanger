@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.Paths
 {
     /// <summary>
     ///     The DISPLAYCONFIG_PATH_INFO structure is used to describe a single path from a target to a source.

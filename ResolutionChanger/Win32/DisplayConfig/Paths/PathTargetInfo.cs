@@ -1,6 +1,8 @@
 using System.Runtime.InteropServices;
+using ResolutionChanger.Win32.DisplayConfig.Data;
+using ResolutionChanger.Win32.DisplayConfig.Modes;
 
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.Paths
 {
     /// <summary>
     ///     The DISPLAYCONFIG_PATH_TARGET_INFO structure contains target information for a single path.

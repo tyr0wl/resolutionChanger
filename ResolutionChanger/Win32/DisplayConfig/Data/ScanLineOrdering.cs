@@ -1,4 +1,6 @@
-namespace ResolutionChanger.Win32.DisplayConfig
+using ResolutionChanger.Win32.DisplayConfig.Paths;
+
+namespace ResolutionChanger.Win32.DisplayConfig.Data
 {
     /// <summary>
     ///     The DISPLAYCONFIG_SCANLINE_ORDERING enumeration specifies the method that the display uses to create an image on a
@@ -12,7 +14,7 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     <see cref="PathTargetInfo.scanLineOrdering" /> member of the
         ///     <see cref="PathTargetInfo" /> structure in a call to the
         ///     <see cref="DisplayConfigApi.SetDisplayConfig" /> function to
-        ///     <see cref="DISPLAYCONFIG_SCANLINE_ORDERING_UNSPECIFIED" /> if the caller also set the refresh rate
+        ///     <see cref="Unspecified" /> if the caller also set the refresh rate
         ///     <see cref="Rational.Denominator" /> and <see cref="Rational.Numerator" /> of the
         ///     <see cref="PathTargetInfo.refreshRate" /> member both to zero. In this case,
         ///     <see cref="DisplayConfigApi.SetDisplayConfig" /> uses the best refresh rate it can find.
@@ -42,6 +44,6 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     Indicates that the output is an interlaced image that is created beginning with the lower field.
         ///     DISPLAYCONFIG_SCANLINE_ORDERING_INTERLACED_LOWERFIELDFIRST
         /// </summary>
-        InterlacedLowerFieldFirst = 3,
+        InterlacedLowerFieldFirst = 3
     }
 }

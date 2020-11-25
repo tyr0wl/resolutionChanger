@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using ResolutionChanger.Win32;
 using ResolutionChanger.Win32.DisplayConfig;
 using ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes;
+using ResolutionChanger.Win32.DisplayConfig.Paths;
 using ResolutionChanger.Win32.DisplaySettings;
 using SystemConsole = System.Console;
 

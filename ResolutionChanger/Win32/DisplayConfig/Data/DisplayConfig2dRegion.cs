@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.Data
 {
     /// <summary>
     ///     The DISPLAYCONFIG_2DREGION structure represents a point or an offset in a two-dimensional space.

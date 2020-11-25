@@ -4,7 +4,11 @@ using System.IO;
 using System.Runtime.InteropServices;
 using ResolutionChanger.Win32;
 using ResolutionChanger.Win32.DisplayConfig;
+using ResolutionChanger.Win32.DisplayConfig.Data;
 using ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes;
+using ResolutionChanger.Win32.DisplayConfig.ModeInfo;
+using ResolutionChanger.Win32.DisplayConfig.Modes;
+using ResolutionChanger.Win32.DisplayConfig.Paths;
 
 namespace ResolutionChanger.Console
 {

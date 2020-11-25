@@ -1,7 +1,8 @@
 using System.Runtime.InteropServices;
-using ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes;
+using ResolutionChanger.Win32.DisplayConfig.Data;
+using ResolutionChanger.Win32.DisplayConfig.Modes;
 
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.ModeInfo
 {
     /// <summary>
     ///     The DISPLAYCONFIG_MODE_INFO structure contains either source mode or target mode information.

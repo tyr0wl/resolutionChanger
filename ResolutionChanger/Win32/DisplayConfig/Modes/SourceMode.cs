@@ -1,7 +1,6 @@
-using System;
 using System.Runtime.InteropServices;
 
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.Modes
 {
     /// <summary>
     ///     The DISPLAYCONFIG_SOURCE_MODE structure represents a point or an offset in a two-dimensional space.

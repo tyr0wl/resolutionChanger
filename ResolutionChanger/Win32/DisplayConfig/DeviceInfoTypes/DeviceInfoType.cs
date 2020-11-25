@@ -1,6 +1,4 @@
-using ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes;
-
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes
 {
     /// <summary>
     ///     The DISPLAYCONFIG_DEVICE_INFO_TYPE enumeration specifies the type of display device info to configure or obtain

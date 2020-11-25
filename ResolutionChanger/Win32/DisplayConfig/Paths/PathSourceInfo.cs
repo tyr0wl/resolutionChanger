@@ -1,6 +1,7 @@
 using System.Runtime.InteropServices;
+using ResolutionChanger.Win32.DisplayConfig.Data;
 
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.Paths
 {
     /// <summary>
     ///     The DISPLAYCONFIG_PATH_SOURCE_INFO structure contains source information for a single path.

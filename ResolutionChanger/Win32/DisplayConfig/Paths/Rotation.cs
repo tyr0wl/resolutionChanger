@@ -1,4 +1,4 @@
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.Paths
 {
     /// <summary>
     ///     The DISPLAYCONFIG_ROTATION enumeration specifies the clockwise rotation of the display.

@@ -1,4 +1,4 @@
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.ModeInfo
 {
     /// <summary>
     ///     The DISPLAYCONFIG_MODE_INFO_TYPE enumeration specifies that the information that is contained within the

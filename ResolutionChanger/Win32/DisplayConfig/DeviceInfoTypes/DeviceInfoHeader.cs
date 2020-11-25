@@ -1,6 +1,7 @@
 using System.Runtime.InteropServices;
+using ResolutionChanger.Win32.DisplayConfig.Data;
 
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes
 {
     /// <summary>
     ///     The DISPLAYCONFIG_DEVICE_INFO_HEADER structure contains display information about the device.
@@ -29,9 +30,8 @@ namespace ResolutionChanger.Win32.DisplayConfig
 
         /// <summary>
         ///     The source or target identifier to get or set the device information for. The meaning of this identifier is related
-        ///     to the type of information being requested. For example, in the case of
-        ///   DeviceInfoType.DisplayconfigDeviceInfoGetSourceNameT_SOURCE_NAME" />, this is the source
-        ///     identifier.
+        ///     to the type of information being requested. For example, in the case of <see cref="DeviceInfoType.GetSourceName" />
+        ///     , this is the source identifier.
         /// </summary>
         public uint id;
 

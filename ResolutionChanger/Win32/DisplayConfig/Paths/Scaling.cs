@@ -1,4 +1,4 @@
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.Paths
 {
     /// <summary>
     ///     The DISPLAYCONFIG_SCALING enumeration specifies the scaling transformation applied to content displayed on a video

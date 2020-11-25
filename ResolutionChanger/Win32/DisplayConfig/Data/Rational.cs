@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace ResolutionChanger.Win32.DisplayConfig
+namespace ResolutionChanger.Win32.DisplayConfig.Data
 {
     /// <summary>
     ///     The DISPLAYCONFIG_RATIONAL structure describes a fractional value that represents vertical and horizontal
