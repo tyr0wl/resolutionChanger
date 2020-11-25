@@ -9,6 +9,8 @@ namespace ResolutionChanger.Win32.DisplayConfig
     [StructLayout(LayoutKind.Sequential)]
     public struct PathSourceInfo
     {
+        public const uint ModeIdxInvalid = 0xffffffff;
+
         /// <summary>
         ///     The identifier of the adapter that this source information relates to.
         /// </summary>
@@ -30,6 +32,8 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     A bitwise OR of flag values that indicates the state of the path.
         /// </summary>
         [MarshalAs(UnmanagedType.U4)] public SourceInfoFlags statusFlags;
+
+        public bool InvalidModeIdx => modeInfoIdx == ModeIdxInvalid;
 
         public override string ToString()
         {

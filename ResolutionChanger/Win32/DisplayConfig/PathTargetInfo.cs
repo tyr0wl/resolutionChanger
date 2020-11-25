@@ -85,6 +85,8 @@ namespace ResolutionChanger.Win32.DisplayConfig
         /// </summary>
         [MarshalAs(UnmanagedType.U4)] public PathTargetInfoFlags statusFlags;
 
+        public bool InvalidModeIdx => modeInfoIdx == ModeIdxInvalid;
+
         public override string ToString()
         {
             var modeIdxString = InvalidModeIdx ? "-" : modeInfoIdx.ToString();

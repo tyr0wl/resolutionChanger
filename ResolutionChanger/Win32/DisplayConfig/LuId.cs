@@ -20,6 +20,12 @@ namespace ResolutionChanger.Win32.DisplayConfig
         /// </summary>
         public int HighPart;
 
+        public LuId(uint lowPart, int highPart)
+        {
+            LowPart = lowPart;
+            HighPart = highPart;
+        }
+
         public bool Equals(LuId other)
         {
             return LowPart == other.LowPart && HighPart == other.HighPart;
@@ -48,6 +54,11 @@ namespace ResolutionChanger.Win32.DisplayConfig
         public override string ToString()
         {
             return $"{GetType().Name} {{{LowPart},{HighPart}}}";
+        }
+
+        public static explicit operator LuId(uint lowPart)
+        {
+            return new (lowPart, 0);
         }
     }
 }

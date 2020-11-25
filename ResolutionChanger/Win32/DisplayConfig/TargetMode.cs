@@ -14,6 +14,10 @@ namespace ResolutionChanger.Win32.DisplayConfig
         /// </summary>
         [MarshalAs(UnmanagedType.Struct)] public VideoSignalInfo targetVideoSignalInfo;
 
+        public bool IsEmpty => Equals(this, Empty);
+
+        public static TargetMode Empty => default;
+
         public override string ToString()
         {
             return $"{GetType().Name} {{{targetVideoSignalInfo}}}";

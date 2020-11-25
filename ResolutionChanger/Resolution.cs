@@ -2,11 +2,25 @@
 {
     public struct Resolution
     {
-        public static Resolution Empty { get; set; } = new Resolution();
+        public Resolution(uint width, uint height, uint frequency)
+        {
+            Width = width;
+            Height = height;
+            Frequency = frequency;
+        }
 
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public int Frequency { get; set; }
+        public static Resolution Empty { get; set; } = new();
+        public uint Frequency { get; set; }
+        public uint Height { get; set; }
+
+        public uint Width { get; set; }
+
+        public void Deconstruct(out uint width, out uint height, out uint frequency)
+        {
+            width = Width;
+            height = Height;
+            frequency = Frequency;
+        }
 
         public override string ToString()
         {

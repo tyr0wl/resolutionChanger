@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.InteropServices;
 
 namespace ResolutionChanger.Win32.DisplayConfig
@@ -29,6 +30,10 @@ namespace ResolutionChanger.Win32.DisplayConfig
         ///     source surface. The source surface that is located at (0, 0) is always the primary source surface.
         /// </summary>
         [MarshalAs(UnmanagedType.Struct)] public PointL position;
+
+        public bool IsEmpty => Equals(this, Empty);
+
+        public static SourceMode Empty => default;
 
         public override string ToString()
         {
