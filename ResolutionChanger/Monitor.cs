@@ -4,9 +4,13 @@ namespace ResolutionChanger
 {
     public class Monitor
     {
-        public uint Id { get; set; }
-        public string DeviceName { get; set; }
-        public List<Resolution> SupportedResolutions { get; } = new List<Resolution>();
+        public uint AdapterId { get; set; }
+
+        public uint SourceId { get; set; }
+        public uint TargetId { get; set; }
+        public string DisplayName { get; set; }
+        public string DevicePath { get; set; }
+        public List<Resolution> SupportedResolutions { get; } = new();
         public Resolution CurrentResolution { get; set; }
         public Point Position { get; set; }
 
@@ -18,7 +22,7 @@ namespace ResolutionChanger
             var primaryString = IsPrimary ? "P" : null;
             var activeString = IsActive ? "A" : "D";
             var currentResolution = !Equals(CurrentResolution, Resolution.Empty) ? $" {CurrentResolution}" : null;
-            return $"{DeviceName}({primaryString}{activeString}){currentResolution} ({Position})";
+            return $"{DisplayName}({AdapterId},{SourceId},{TargetId},{primaryString}{activeString}){currentResolution} ({Position})";
         }
     }
 }
