@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Newtonsoft.Json;
 using ResolutionChanger.Win32;
 using ResolutionChanger.Win32.DisplayConfig;
 using ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes;
@@ -13,291 +15,141 @@ namespace ResolutionChanger.Console
 {
     internal class Program
     {
+        public static Dictionary<uint, string> friendlyMonitors = new ();
+
         private static void Main(string[] args)
         {
-            var friendlyNames = GetAllMonitorsFriendlyNames().ToList();
-            var monitors = new List<Monitor>();
+            var monitors = GetMonitors();
 
-            var displayDevice = new DisplayDevice();
-            displayDevice.cb = Marshal.SizeOf(displayDevice);
-            try
+            var setup = args.FirstOrDefault();
+            if (setup == "a")
             {
-                // User32.EnumDisplayDevices only fills displayDevice with the settings for the provided iDevNum.
-                // In order to get all devices we need to call User32.EnumDisplayDevices with increasing iDevNums until it returns false.
-                for (uint id = 0; DisplaySettingsApi.EnumDisplayDevices(null, id, ref displayDevice, 0); id++)
-                {
-                    monitors.Add(new Monitor
-                    {
-                        Id = id,
-                        DeviceName = displayDevice.DeviceName,
-                        IsPrimary = displayDevice.StateFlags.HasFlag(DisplayDeviceStateFlags.PrimaryDevice),
-                        IsActive = displayDevice.StateFlags.HasFlag(DisplayDeviceStateFlags.AttachedToDesktop),
-                    });
-                    displayDevice.cb = Marshal.SizeOf(displayDevice);
-                }
+                SetSetupA(monitors);
             }
-            catch (Exception ex)
+            else
             {
-                SystemConsole.WriteLine(ex);
-            }
-
-            foreach (var monitor in monitors)
-            {
-                var devMode = new DevMode();
-                devMode.dmSize = (short)Marshal.SizeOf(devMode);
-
-                if (DisplaySettingsApi.EnumDisplaySettings(monitor.DeviceName, DisplaySettingsApi.CurrentSettings, ref devMode))
-                {
-                    monitor.CurrentResolution = new Resolution
-                    {
-                        Width = devMode.dmPelsWidth,
-                        Height = devMode.dmPelsHeight,
-                        Frequency = devMode.dmDisplayFrequency,
-                    };
-                }
-
-                monitor.Position = new Point
-                {
-                    X = devMode.dmPosition.x,
-                    Y = devMode.dmPosition.y
-                };
-
-                // User32.EnumDisplaySettings only fills devMode with the settings for the provided modeNum.
-                // In order to get all supported resolutions for a monitor we need to call User32.EnumDisplaySettings with increasing modeNums until it returns false.
-                var modeNum = 0;
-                while (DisplaySettingsApi.EnumDisplaySettings(monitor.DeviceName, modeNum, ref devMode))
-                {
-                    modeNum++;
-                    monitor.SupportedResolutions.Add(new Resolution
-                    {
-                        Width = devMode.dmPelsWidth,
-                        Height = devMode.dmPelsHeight,
-                        Frequency = devMode.dmDisplayFrequency,
-                    });
-                }
-
-                SystemConsole.WriteLine(monitor);
-            }
-
-            var primaryMonitor = monitors.First(monitor => monitor.IsPrimary);
-            var secondMonitor = monitors.Skip(1).First();
-            //secondMonitor.CurrentResolution = new Resolution
-            //{
-            //    Width = secondMonitor.CurrentResolution.Width,
-            //    Height = secondMonitor.CurrentResolution.Height,
-            //    Frequency = 120,
-            //};
-            //secondMonitor.Position = new Point { X = -1920, Y = 1440 - 1080 };
-            //secondMonitor.IsActive = false;
-            //Update(secondMonitor);
-
-            secondMonitor.IsActive = false;
-            secondMonitor.CurrentResolution = new Resolution { Width = 1920, Height = 1080, Frequency = 120 };
-            secondMonitor.Position = new Point { X = -secondMonitor.CurrentResolution.Width, Y = primaryMonitor.Position.Y - secondMonitor.Position.Y };
-            //Update(secondMonitor);
-
-            //SetAsPrimaryMonitor(secondMonitor);
-            //Deactivate(secondMonitor);
-        }
-
-        public static void Update(Monitor monitor)
-        {
-            if (monitor.IsActive == false)
-            {
-                Deactivate(monitor);
-                return;
-            }
-
-            var deviceMode = new DevMode();
-
-            DisplaySettingsApi.EnumDisplaySettings(monitor.DeviceName, DisplaySettingsApi.CurrentSettings, ref deviceMode);
-
-            deviceMode.dmPelsWidth = monitor.CurrentResolution.Width;
-            deviceMode.dmPelsHeight = monitor.CurrentResolution.Height;
-            deviceMode.dmDisplayFrequency = monitor.CurrentResolution.Frequency;
-            deviceMode.dmPosition.x = monitor.Position.X;
-            deviceMode.dmPosition.y = monitor.Position.Y;
-
-            var result = DisplaySettingsApi.ChangeDisplaySettingsEx(
-                monitor.DeviceName,
-                ref deviceMode,
-                (IntPtr)null,
-                (ChangeDisplaySettingsFlags.UpdateRegistry | ChangeDisplaySettingsFlags.NoReset),
-                IntPtr.Zero);
-
-            if (result == DisplayChange.Successful)
-            {
-                DisplaySettingsApi.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.None, (IntPtr)null);
+                SetSetupB(monitors);
             }
         }
 
-        public static void Deactivate(Monitor monitor)
+        private static void SetSetupA(IList<Monitor> monitors)
         {
-            var deleteScreenMode = new DevMode
+            var lc32G7 = monitors.First(monitor => monitor.DisplayName.Contains("LC32G7"));
+            var vg279 = monitors.First(monitor => monitor.DisplayName == "VG279");
+            var tv = monitors.First(monitor => monitor.DisplayName == "SAMSUNG");
+            var eizo = monitors.First(monitor => monitor.DisplayName == "S2231W");
+
+            tv.IsActive = true;
+            tv.IsPrimary = true;
+            tv.CurrentResolution = new Resolution { Width = 2560, Height = 1440, Frequency = 120 };
+            tv.Position = new Point();
+
+            eizo.IsActive = true;
+            eizo.CurrentResolution = new Resolution { Width = 1680, Height = 1050, Frequency = 60 };
+            eizo.Position = new Point
             {
-                dmDriverExtra = 0,
-                dmFields = DmFieldFlags.Position | DmFieldFlags.PelsHeight | DmFieldFlags.PelsWidth,
-                dmPelsWidth = 0,
-                dmPelsHeight = 0,
-                dmPosition = new PointL(),
+                X = (int)tv.CurrentResolution.Width,
+                Y = (int)(tv.CurrentResolution.Height - eizo.CurrentResolution.Height),
             };
 
-            deleteScreenMode.dmSize = (short)Marshal.SizeOf(deleteScreenMode); 
-            
-            var result = DisplaySettingsApi.ChangeDisplaySettingsEx(monitor.DeviceName, ref deleteScreenMode, IntPtr.Zero, ChangeDisplaySettingsFlags.UpdateRegistry, IntPtr.Zero);
-            if (result == DisplayChange.Successful)
-            {
-                DisplaySettingsApi.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.None, (IntPtr)null);
-            }
+            lc32G7.IsActive = false;
+            vg279.IsActive = false;
+
+            Update(monitors);
         }
 
-        public static void SetAsPrimaryMonitor(Monitor monitor)
+        private static void SetSetupB(IList<Monitor> monitors)
         {
-            var device = new DisplayDevice();
-            var deviceMode = new DevMode();
-            device.cb = Marshal.SizeOf(device);
+            var lc32G7 = monitors.First(monitor => monitor.DisplayName.Contains("LC32G7"));
+            var vg279 = monitors.First(monitor => monitor.DisplayName == "VG279");
+            var tv = monitors.First(monitor => monitor.DisplayName == "SAMSUNG");
+            var eizo = monitors.First(monitor => monitor.DisplayName == "S2231W");
 
-            DisplaySettingsApi.EnumDisplaySettings(monitor.DeviceName, DisplaySettingsApi.CurrentSettings, ref deviceMode);
-            var offsetX = deviceMode.dmPosition.x;
-            var offsetY = deviceMode.dmPosition.y;
-            deviceMode.dmPosition.x = 0;
-            deviceMode.dmPosition.y = 0;
+            // Setup B
+            //lc32G7.IsActive = true;
+            //lc32G7.IsPrimary = true;
+            //lc32G7.CurrentResolution = new Resolution { Width = 2560, Height = 1440, Frequency = 240 };
+            //lc32G7.Position = new Point { X = 0, Y = 0 };
+            //Update(lc32G7);
 
-            var result = DisplaySettingsApi.ChangeDisplaySettingsEx(
-                monitor.DeviceName,
-                ref deviceMode,
-                (IntPtr)null,
-                (ChangeDisplaySettingsFlags.SetPrimary | ChangeDisplaySettingsFlags.UpdateRegistry | ChangeDisplaySettingsFlags.NoReset),
-                IntPtr.Zero);
+            //lc32G7.IsActive = true;
+            lc32G7.CurrentResolution = new Resolution { Width = 1920, Height = 1080, Frequency = 120 };
+            //lc32G7.Position = new Point { X = (int) -lc32G7.CurrentResolution.Width, Y = (int) (vg279.CurrentResolution.Height - vg279.CurrentResolution.Height) };
 
-            if (result != DisplayChange.Successful)
+            Update(monitors);
+            //eizo.IsActive = false;
+            //tv.IsActive = false;
+            //Update(tv);
+        }
+
+        public static void Update(IList<Monitor> monitors)
+        {
+        }
+
+        private static IList<Monitor> GetMonitors()
+        {
+            var (paths, modes) = DisplayConfigHelper.GetDisplayConfig();
+
+            // gdi, source,target,friendly,devicePath
+            var monitors = new Dictionary<string, Monitor>();
+
+            for (var index = 0; index < paths.Length; index++)
             {
-                return;
-            }
+                var displayPath = paths[index];
 
-            device = new DisplayDevice();
-            device.cb = Marshal.SizeOf(device);
-
-            // Update remaining devices
-            for (uint otherId = 0; DisplaySettingsApi.EnumDisplayDevices(null, otherId, ref device, 0); otherId++)
-            {
-                if (device.StateFlags.HasFlag(DisplayDeviceStateFlags.AttachedToDesktop) && otherId != monitor.Id)
+                if (!displayPath.targetInfo.targetAvailable)
                 {
-                    device.cb = Marshal.SizeOf(device);
-                    var otherDeviceMode = new DevMode();
+                    continue;
+                }
 
-                    DisplaySettingsApi.EnumDisplaySettings(device.DeviceName, DisplaySettingsApi.CurrentSettings, ref otherDeviceMode);
+                var sourceInfo = displayPath.sourceInfo;
+                var targetInfo = displayPath.targetInfo;
+                var sourceDeviceName = DisplayConfigHelper.GetGdiDeviceNameFromSource(sourceInfo.adapterId, sourceInfo.id);
+                var targetDeviceName = DisplayConfigHelper.GetTargetDeviceName(targetInfo.adapterId, targetInfo.id);
+                var adapterName = DisplayConfigHelper.GetAdapterName(targetInfo.adapterId);
 
-                    otherDeviceMode.dmPosition.x -= offsetX;
-                    otherDeviceMode.dmPosition.y -= offsetY;
+                if (displayPath.flags.HasFlag(PathInfoFlags.Active))
+                {
+                    SystemConsole.WriteLine($"Path flags:{displayPath.flags}");
+                    PrintPath(sourceInfo, targetInfo, targetDeviceName, sourceDeviceName);
 
-                    result = DisplaySettingsApi.ChangeDisplaySettingsEx(
-                        device.DeviceName,
-                        ref otherDeviceMode,
-                        (IntPtr)null,
-                        (ChangeDisplaySettingsFlags.UpdateRegistry | ChangeDisplaySettingsFlags.NoReset),
-                        IntPtr.Zero);
+                    friendlyMonitors.Add(targetInfo.id, targetDeviceName.monitorFriendlyDeviceName);
+                    var monitor = DisplayConfigHelper.GetMonitor(displayPath, modes, targetDeviceName);
+                    monitors.Add(sourceDeviceName.viewGdiDeviceName, monitor);
+                }
+                else if (!sourceInfo.statusFlags.HasFlag(SourceInfoFlags.InUse) && !targetInfo.statusFlags.HasFlag(PathTargetInfoFlags.InUse) && !monitors.ContainsKey(sourceDeviceName.viewGdiDeviceName))
+                {
+                    paths[index].flags |= PathInfoFlags.Active;
+                    paths[index].sourceInfo.statusFlags |= SourceInfoFlags.InUse;
+                    paths[index].targetInfo.statusFlags |= PathTargetInfoFlags.InUse;
+                    paths[index].sourceInfo.modeInfoIdx = PathSourceInfo.ModeIdxInvalid;
+                    paths[index].targetInfo.modeInfoIdx = PathTargetInfo.ModeIdxInvalid;
+                    var result = DisplayConfigApi.SetDisplayConfig((uint) paths.Length, paths, (uint) modes.Length, modes, SetDisplayConfigFlags.Validate | SetDisplayConfigFlags.UseSuppliedDisplayConfig);
 
-                    if (result != DisplayChange.Successful)
+                    if (result != Win32Status.ErrorSuccess)
                     {
-                        return;
+                        paths[index].flags &= ~PathInfoFlags.Active;
+                        paths[index].sourceInfo.statusFlags &= ~SourceInfoFlags.InUse;
+                        paths[index].targetInfo.statusFlags &= ~PathTargetInfoFlags.InUse;
                     }
+                    else
+                    {
+                        friendlyMonitors.Add(targetInfo.id, targetDeviceName.monitorFriendlyDeviceName);
+                        var monitor = DisplayConfigHelper.GetMonitor(displayPath, modes, targetDeviceName);
+                        monitors.Add(sourceDeviceName.viewGdiDeviceName, monitor);
+                    }
+                    SystemConsole.WriteLine($"activation: {result}");
+                    PrintPath(paths[index].sourceInfo, paths[index].targetInfo, targetDeviceName, sourceDeviceName);
                 }
-
-                device.cb = Marshal.SizeOf(device);
             }
 
-            // Apply settings
-            DisplaySettingsApi.ChangeDisplaySettingsEx(null, IntPtr.Zero, (IntPtr)null, ChangeDisplaySettingsFlags.None, (IntPtr)null);
+            return monitors.Values.ToList();
         }
 
-        private static TargetDeviceName GetTargetDeviceName(LuId adapterId, uint targetId)
+        private static void PrintPath(PathSourceInfo sourceInfo, PathTargetInfo targetInfo, TargetDeviceName targetDeviceName, SourceDeviceName sourceDeviceName)
         {
-            var deviceName = new TargetDeviceName
-            {
-                header =
-                {
-                    size = (uint)Marshal.SizeOf(typeof (TargetDeviceName)),
-                    adapterId = adapterId,
-                    id = targetId,
-                    type = DeviceInfoType.GetTargetName
-                }
-            };
-
-            var error = DisplayConfigApi.DisplayConfigGetDeviceInfo(ref deviceName);
-            if (error != (int) Win32Status.ErrorSuccess)
-            {
-                throw new Win32Exception(error);
-            }
-
-            return deviceName;
-        }
-
-        private static IEnumerable<string> GetAllMonitorsFriendlyNames()
-        {
-            var error = DisplayConfigApi.GetDisplayConfigBufferSizes(QueryDeviceConfigFlags.AllPaths, out var pathCount, out var modeCount);
-            if (error != (int)Win32Status.ErrorSuccess)
-            {
-                throw new Win32Exception(error);
-            }
-
-            var displayPaths = new PathInfo[pathCount];
-            var displayModes = new ModeInfo[modeCount];
-            error = DisplayConfigApi.QueryDisplayConfig(QueryDeviceConfigFlags.AllPaths, ref pathCount, displayPaths, ref modeCount, displayModes, IntPtr.Zero);
-            
-            if (error != (int)Win32Status.ErrorSuccess)
-            {
-                throw new Win32Exception(error);
-            }
-
-            var availableDisplayPaths = displayPaths.Where(displayPath => displayPath.targetInfo.targetAvailable).GroupBy(info => (info.targetInfo.adapterId, info.targetInfo.id));
-            foreach (var availableDisplayPath in availableDisplayPaths)
-            {
-                var (adapterId, id) = availableDisplayPath.Key;
-                yield return GetTargetDeviceName(adapterId, id).monitorFriendlyDeviceName;
-            }
-        }
-
-        /*
-         * Gets GDI Device name from Source (e.g. \\.\DISPLAY4).
-        */
-        public static SourceDeviceName GetGdiDeviceNameFromSource(LuId adapterId, uint sourceId)
-        {
-            var deviceName = new SourceDeviceName
-            {
-                header =
-                {
-                    size = (uint)Marshal.SizeOf(typeof (SourceDeviceName)),
-                    adapterId = adapterId,
-                    id = sourceId,
-                    type = DeviceInfoType.GetSourceName
-                }
-            };
-
-            DisplayConfigApi.DisplayConfigGetDeviceInfo(ref deviceName);
-            return deviceName;
-        }
-
-        /*
-            Gets Friendly name from Target (e.g. "SyncMaster")
-            Gets Device Path from Target
-            e.g. \\?\DISPLAY#SAM0304#5&9a89472&0&UID33554704#{e6f07b5f-ee97-4a90-b076-33f57bf4eaa7}
-        */
-        public TargetDeviceName GetDISPLAYCONFIG_TARGET_DEVICE_NAME(LuId adapterId, uint targetId)
-        {
-            var deviceName = new TargetDeviceName
-            {
-                header =
-                {
-                    size = (uint)Marshal.SizeOf(typeof (TargetDeviceName)),
-                    adapterId = adapterId,
-                    id = targetId,
-                    type = DeviceInfoType.GetTargetName
-                }
-            };
-
-            DisplayConfigApi.DisplayConfigGetDeviceInfo(ref deviceName);
-            return deviceName;
+            SystemConsole.WriteLine(
+                $"path:{sourceInfo.id}+{targetInfo.id},{sourceInfo.statusFlags}<->{targetInfo.statusFlags}->{targetDeviceName.outputTechnology},{sourceDeviceName.viewGdiDeviceName},{targetDeviceName.monitorFriendlyDeviceName},{targetDeviceName.monitorDevicePath},{targetDeviceName.connectorInstance},{targetDeviceName.edidManufactureId},{targetDeviceName.edidProductCodeId}");
         }
     }
 }
