@@ -221,5 +221,30 @@ namespace ResolutionChanger.Win32.DisplayConfig
             ref uint numModeInfoArrayElements, [Out] ModeInfo[] modeInfoArray,
             [Out] out TopologyId currentTopologyId
         );
+
+        /// <summary>
+        ///     The <see cref="SetDisplayConfig" /> function modifies the display topology, source, and target modes by exclusively
+        ///     enabling the specified paths in the current session.
+        /// </summary>
+        /// <param name="numPathArrayElements">Number of elements in <paramref name="pathArray" />.</param>
+        /// <param name="pathArray">
+        ///     Array of all display paths that are to be set. Only the paths within this array that have the
+        ///     <see cref="PathInfoFlags.Active" /> flag set in the <see cref="PathInfo.flags" /> member of <see cref="PathInfo" />
+        ///     are set. This parameter can be <c>null</c>. The order in which active paths appear in this array determines the
+        ///     path priority. For more information about path priority order, see Path Priority Order.
+        /// </param>
+        /// <param name="numModeInfoArrayElements">Number of elements in <paramref name="modeInfoArray" />.</param>
+        /// <param name="modeInfoArray">
+        ///     Array of display source and target mode information (<see cref="ModeInfo" />) that is
+        ///     referenced by the modeInfoIdx member of <see cref="PathSourceInfo" /> and <see cref="PathTargetInfo" /> element of
+        ///     path information from pathArray. This parameter can be <c>null</c>.
+        /// </param>
+        /// <param name="flags">A bitwise OR of flag values that indicates the behavior of this function.</param>
+        [DllImport("user32.dll")]
+        public static extern Win32Status SetDisplayConfig(
+            [In] uint numPathArrayElements, [In] PathInfo[] pathArray,
+            [In] uint numModeInfoArrayElements, [In] ModeInfo[] modeInfoArray,
+            [In] SetDisplayConfigFlags flags
+        );
     }
 }
