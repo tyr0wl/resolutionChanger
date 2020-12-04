@@ -13,12 +13,12 @@ namespace ResolutionChanger.Win32.DisplayConfig.Modes
         /// <summary>
         ///     The pixel clock rate.
         /// </summary>
-        [MarshalAs(UnmanagedType.U8)] public readonly ulong pixelRate;
+        [MarshalAs(UnmanagedType.U8)] public ulong pixelRate;
 
         /// <summary>
         ///     A DISPLAYCONFIG_RATIONAL structure that represents horizontal sync.
         /// </summary>
-        [MarshalAs(UnmanagedType.Struct)] public readonly Rational hSyncFreq;
+        [MarshalAs(UnmanagedType.Struct)] public Rational hSyncFreq;
 
         /// <summary>
         ///     A DISPLAYCONFIG_RATIONAL structure that represents vertical sync.
@@ -29,19 +29,19 @@ namespace ResolutionChanger.Win32.DisplayConfig.Modes
         ///     A DISPLAYCONFIG_2DREGION structure that specifies the width and height (in pixels) of the active portion of the
         ///     video signal.
         /// </summary>
-        [MarshalAs(UnmanagedType.Struct)] public readonly DisplayConfig2dRegion activeSize;
+        [MarshalAs(UnmanagedType.Struct)] public DisplayConfig2dRegion activeSize;
 
         /// <summary>
         ///     A DISPLAYCONFIG_2DREGION structure that specifies the width and height (in pixels) of the entire video signal.
         /// </summary>
-        [MarshalAs(UnmanagedType.Struct)] public readonly DisplayConfig2dRegion totalSize;
+        [MarshalAs(UnmanagedType.Struct)] public DisplayConfig2dRegion totalSize;
 
         /// <summary>
         ///     The video standard (if any) that defines the video signal. For a list of possible values, see the
         ///     <see cref="VideoSignalStandard" /> enumerated type.
         ///     Supported starting with Windows 8.1.
         /// </summary>
-        [MarshalAs(UnmanagedType.U2)] public readonly VideoSignalStandard videoStandard;
+        [MarshalAs(UnmanagedType.U2)] public VideoSignalStandard videoStandard;
 
         /// <summary>
         ///     The ratio of the VSync rate of a monitor that displays through a Miracast connected session to the VSync rate of
@@ -53,13 +53,13 @@ namespace ResolutionChanger.Win32.DisplayConfig.Modes
         ///     <br />
         ///     For a non-Miracast target, the driver should set <see cref="vSyncFreqDivider" /> to zero.
         /// </summary>
-        [MarshalAs(UnmanagedType.U2)] public readonly ushort vSyncFreqDivider;
+        [MarshalAs(UnmanagedType.U2)] public ushort vSyncFreqDivider;
 
         /// <summary>
         ///     The scan-line ordering (for example, progressive or interlaced) of the video signal. For a list of possible values,
         ///     see the <see cref="ScanLineOrdering" /> enumerated type.
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)] public readonly ScanLineOrdering scanLineOrdering;
+        [MarshalAs(UnmanagedType.U4)] public ScanLineOrdering scanLineOrdering;
 
         public override string ToString()
         {
