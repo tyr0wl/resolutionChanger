@@ -1,4 +1,6 @@
 using System.Runtime.InteropServices;
+using ResolutionChanger.Data;
+using ResolutionChanger.Data.Paths;
 using ResolutionChanger.Win32.DisplayConfig.Data;
 
 namespace ResolutionChanger.Win32.DisplayConfig.Paths
@@ -40,6 +42,31 @@ namespace ResolutionChanger.Win32.DisplayConfig.Paths
         {
             var modeIdxString = InvalidModeIdx ? "-" : modeInfoIdx.ToString();
             return $@"{{source {id},{statusFlags},[{modeIdxString}]}}";
+        }
+
+        public static explicit operator Source(PathSourceInfo sourceInfo)
+        {
+            return new()
+            {
+                DeviceId = new DeviceId
+                {
+                    AdapterId = sourceInfo.adapterId.LowPart,
+                    Id = sourceInfo.id
+                },
+                InUse = sourceInfo.statusFlags.HasFlag(SourceInfoFlags.InUse),
+                ModeIndex = sourceInfo.InvalidModeIdx ? -1 : (int) sourceInfo.modeInfoIdx,
+            };
+        }
+
+        public static explicit operator PathSourceInfo(Source source)
+        {
+            return new()
+            {
+                adapterId = new LuId { LowPart = source.DeviceId.AdapterId },
+                id = source.DeviceId.Id,
+                modeInfoIdx = source.InvalidModeIndex ? ModeIdxInvalid : (uint) source.ModeIndex,
+                statusFlags = source.InUse ? SourceInfoFlags.InUse : SourceInfoFlags.None,
+            };
         }
     }
 }

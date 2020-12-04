@@ -31,6 +31,12 @@ namespace ResolutionChanger.Win32
             return new Point(x, y);
         }
 
+        public static explicit operator PointL(Point point)
+        {
+            var (x, y) = point;
+            return new PointL(x, y);
+        }
+
         public override string ToString()
         {
             return $"{{{GetType().Name} {nameof(x)}: {x}, {nameof(y)}: {y}}}";

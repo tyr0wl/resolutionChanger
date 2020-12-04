@@ -1,4 +1,6 @@
 using System.Runtime.InteropServices;
+using ResolutionChanger.Data;
+using ResolutionChanger.Data.Paths;
 using ResolutionChanger.Win32.DisplayConfig.Data;
 using ResolutionChanger.Win32.DisplayConfig.Modes;
 
@@ -93,6 +95,44 @@ namespace ResolutionChanger.Win32.DisplayConfig.Paths
         {
             var modeIdxString = InvalidModeIdx ? "-" : modeInfoIdx.ToString();
             return $@"{{target {id},{statusFlags},[{modeIdxString}]->{outputTechnology}}}";
+        }
+
+        public static explicit operator Target(PathTargetInfo targetInfo)
+        {
+            return new()
+            {
+                DeviceId = new DeviceId
+                {
+                    AdapterId = targetInfo.adapterId.LowPart,
+                    Id = targetInfo.id
+                },
+                InUse = targetInfo.statusFlags.HasFlag(PathTargetInfoFlags.InUse),
+                ModeIndex = targetInfo.InvalidModeIdx ? -1 : (int)targetInfo.modeInfoIdx,
+                VideoOutput = targetInfo.outputTechnology,
+                Available = targetInfo.targetAvailable,
+                RefreshRate = targetInfo.refreshRate,
+                Rotation = targetInfo.rotation,
+                Scaling = targetInfo.scaling,
+                ScanLineOrdering = targetInfo.scanLineOrdering,
+                Status = targetInfo.statusFlags,
+            };
+        }
+
+        public static explicit operator PathTargetInfo(Target target)
+        {
+            return new()
+            {
+                adapterId = new LuId { LowPart = target.DeviceId.AdapterId },
+                id = target.DeviceId.Id,
+                modeInfoIdx = target.InvalidModeIndex ? ModeIdxInvalid : (uint)target.ModeIndex,
+                outputTechnology = target.VideoOutput,
+                refreshRate = target.RefreshRate,
+                rotation = target.Rotation,
+                scaling = target.Scaling,
+                scanLineOrdering = target.ScanLineOrdering,
+                targetAvailable = target.Available,
+                statusFlags = target.Status,
+            };
         }
     }
 }

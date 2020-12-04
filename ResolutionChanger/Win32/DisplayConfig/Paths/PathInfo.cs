@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+using ResolutionChanger.Data.Paths;
 
 namespace ResolutionChanger.Win32.DisplayConfig.Paths
 {
@@ -27,6 +28,38 @@ namespace ResolutionChanger.Win32.DisplayConfig.Paths
         public override string ToString()
         {
             return $"{{path {sourceInfo},{targetInfo},{flags}}}";
+        }
+
+        public static explicit operator ScreenPath(PathInfo pathInfo)
+        {
+            return new()
+            {
+                Source = (Source) pathInfo.sourceInfo,
+                Target = (Target) pathInfo.targetInfo,
+                Active = pathInfo.flags.HasFlag(PathInfoFlags.Active),
+                SupportsVirtualMode = pathInfo.flags.HasFlag(PathInfoFlags.SupportVirtualMode)
+            };
+        }
+
+        public static explicit operator PathInfo(ScreenPath screenPath)
+        {
+            var flags = PathInfoFlags.None;
+            if (screenPath.Active)
+            {
+                flags |= PathInfoFlags.Active;
+            }
+
+            if (screenPath.SupportsVirtualMode)
+            {
+                flags |= PathInfoFlags.SupportVirtualMode;
+            }
+
+            return new PathInfo
+            {
+                sourceInfo = (PathSourceInfo) screenPath.Source,
+                targetInfo = (PathTargetInfo) screenPath.Target,
+                flags = flags
+            };
         }
     }
 }
