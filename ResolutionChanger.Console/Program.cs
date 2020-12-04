@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using Newtonsoft.Json;
+using ResolutionChanger.Data.Modes;
+using ResolutionChanger.Data.Paths;
 using ResolutionChanger.Win32;
 using ResolutionChanger.Win32.DisplayConfig;
 using ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes;
 using ResolutionChanger.Win32.DisplayConfig.Paths;
-using ResolutionChanger.Win32.DisplaySettings;
 using SystemConsole = System.Console;
 
 namespace ResolutionChanger.Console
@@ -20,7 +20,7 @@ namespace ResolutionChanger.Console
 
         private static void Main(string[] args)
         {
-            var monitors = GetMonitors();
+            var monitors = Win32ApiWrapper.GetMonitors();
 
             var setup = args.FirstOrDefault();
             if (setup == "a")
@@ -49,8 +49,8 @@ namespace ResolutionChanger.Console
             eizo.CurrentResolution = new Resolution { Width = 1680, Height = 1050, Frequency = 60 };
             eizo.Position = new Point
             {
-                X = (int)tv.CurrentResolution.Width,
-                Y = (int)(tv.CurrentResolution.Height - eizo.CurrentResolution.Height),
+                X = (int) tv.CurrentResolution.Width,
+                Y = (int) (tv.CurrentResolution.Height - eizo.CurrentResolution.Height)
             };
 
             lc32G7.IsActive = false;
@@ -81,88 +81,6 @@ namespace ResolutionChanger.Console
             //eizo.IsActive = false;
             //tv.IsActive = false;
             //Update(tv);
-        }
-
-        public static void Update(IList<Monitor> monitors)
-        {
-            var (paths, modes) = DisplayConfigHelper.GetDisplayConfig();
-
-
-            var pathsString = JsonConvert.SerializeObject(paths, Formatting.Indented);
-            var modesString = JsonConvert.SerializeObject(modes, Formatting.Indented);
-            File.WriteAllText("paths.json", pathsString);
-            File.WriteAllText("modes.json", modesString);
-            if (Win32Status.ErrorSuccess == Win32Status.ErrorSuccess)
-            {
-                //result = DisplayConfigApi.SetDisplayConfig((uint)paths.Length, paths.ToArray(), (uint)displayModesList.Count, displayModesList.ToArray(), SetDisplayConfigFlags.Apply | SetDisplayConfigFlags.UseSuppliedDisplayConfig | SetDisplayConfigFlags.AllowChanges);
-                (paths, modes) = DisplayConfigHelper.GetDisplayConfig();
-            }
-        }
-
-        private static IList<Monitor> GetMonitors()
-        {
-            var (paths, modes) = DisplayConfigHelper.GetDisplayConfig();
-
-            // gdi, source,target,friendly,devicePath
-            var monitors = new Dictionary<string, Monitor>();
-
-            for (var index = 0; index < paths.Length; index++)
-            {
-                var displayPath = paths[index];
-
-                if (!displayPath.targetInfo.targetAvailable)
-                {
-                    continue;
-                }
-
-                var sourceInfo = displayPath.sourceInfo;
-                var targetInfo = displayPath.targetInfo;
-                var sourceDeviceName = DisplayConfigHelper.GetGdiDeviceNameFromSource(sourceInfo.adapterId, sourceInfo.id);
-                var targetDeviceName = DisplayConfigHelper.GetTargetDeviceName(targetInfo.adapterId, targetInfo.id);
-                var adapterName = DisplayConfigHelper.GetAdapterName(targetInfo.adapterId);
-
-                if (displayPath.flags.HasFlag(PathInfoFlags.Active))
-                {
-                    SystemConsole.WriteLine($"Path flags:{displayPath.flags}");
-                    PrintPath(sourceInfo, targetInfo, targetDeviceName, sourceDeviceName);
-
-                    friendlyMonitors.Add(targetInfo.id, targetDeviceName.monitorFriendlyDeviceName);
-                    var monitor = DisplayConfigHelper.GetMonitor(displayPath, modes, targetDeviceName);
-                    monitors.Add(sourceDeviceName.viewGdiDeviceName, monitor);
-                }
-                else if (!sourceInfo.statusFlags.HasFlag(SourceInfoFlags.InUse) && !targetInfo.statusFlags.HasFlag(PathTargetInfoFlags.InUse) && !monitors.ContainsKey(sourceDeviceName.viewGdiDeviceName))
-                {
-                    paths[index].flags |= PathInfoFlags.Active;
-                    paths[index].sourceInfo.statusFlags |= SourceInfoFlags.InUse;
-                    paths[index].targetInfo.statusFlags |= PathTargetInfoFlags.InUse;
-                    paths[index].sourceInfo.modeInfoIdx = PathSourceInfo.ModeIdxInvalid;
-                    paths[index].targetInfo.modeInfoIdx = PathTargetInfo.ModeIdxInvalid;
-                    var result = DisplayConfigApi.SetDisplayConfig((uint) paths.Length, paths, (uint) modes.Length, modes, SetDisplayConfigFlags.Validate | SetDisplayConfigFlags.UseSuppliedDisplayConfig);
-
-                    if (result != Win32Status.ErrorSuccess)
-                    {
-                        paths[index].flags &= ~PathInfoFlags.Active;
-                        paths[index].sourceInfo.statusFlags &= ~SourceInfoFlags.InUse;
-                        paths[index].targetInfo.statusFlags &= ~PathTargetInfoFlags.InUse;
-                    }
-                    else
-                    {
-                        friendlyMonitors.Add(targetInfo.id, targetDeviceName.monitorFriendlyDeviceName);
-                        var monitor = DisplayConfigHelper.GetMonitor(displayPath, modes, targetDeviceName);
-                        monitors.Add(sourceDeviceName.viewGdiDeviceName, monitor);
-                    }
-                    SystemConsole.WriteLine($"activation: {result}");
-                    PrintPath(paths[index].sourceInfo, paths[index].targetInfo, targetDeviceName, sourceDeviceName);
-                }
-            }
-
-            return monitors.Values.ToList();
-        }
-
-        private static void PrintPath(PathSourceInfo sourceInfo, PathTargetInfo targetInfo, TargetDeviceName targetDeviceName, SourceDeviceName sourceDeviceName)
-        {
-            SystemConsole.WriteLine(
-                $"path:{sourceInfo.id}+{targetInfo.id},{sourceInfo.statusFlags}<->{targetInfo.statusFlags}->{targetDeviceName.outputTechnology},{sourceDeviceName.viewGdiDeviceName},{targetDeviceName.monitorFriendlyDeviceName},{targetDeviceName.monitorDevicePath},{targetDeviceName.connectorInstance},{targetDeviceName.edidManufactureId},{targetDeviceName.edidProductCodeId}");
         }
     }
 }

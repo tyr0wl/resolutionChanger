@@ -54,7 +54,7 @@ namespace ResolutionChanger.Console
             // Update remaining devices
             for (uint otherId = 0; DisplaySettingsApi.EnumDisplayDevices(null, otherId, ref device, 0); otherId++)
             {
-                if (device.StateFlags.HasFlag(DisplayDeviceStateFlags.AttachedToDesktop) && otherId != monitor.TargetId)
+                if (device.StateFlags.HasFlag(DisplayDeviceStateFlags.AttachedToDesktop) && otherId != monitor.TargetId.Id)
                 {
                     device.cb = Marshal.SizeOf(device);
                     var otherDeviceMode = new DevMode();
