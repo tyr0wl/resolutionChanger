@@ -8,7 +8,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes
     ///     DISPLAYCONFIG_DEVICE_INFO_HEADER structure (wingdi.h)
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct DeviceInfoHeader
+    internal struct DeviceInfoHeader
     {
         /// <summary>
         ///     A DISPLAYCONFIG_DEVICE_INFO_TYPE enumerated value that determines the type of device information to retrieve or

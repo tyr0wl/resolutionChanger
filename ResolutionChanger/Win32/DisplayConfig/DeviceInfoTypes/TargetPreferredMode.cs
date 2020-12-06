@@ -8,7 +8,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes
     ///     DISPLAYCONFIG_TARGET_PREFERRED_MODE structure (wingdi.h)
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct TargetPreferredMode
+    internal struct TargetPreferredMode
     {
         /// <summary>
         ///     A DISPLAYCONFIG_DEVICE_INFO_HEADER structure that contains information about the request for the target preferred

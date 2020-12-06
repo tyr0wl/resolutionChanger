@@ -1,11 +1,10 @@
-﻿using System;
-using ResolutionChanger.Win32.DisplayConfig.Data;
+﻿using ResolutionChanger.Win32.DisplayConfig.Data;
 using ResolutionChanger.Win32.DisplayConfig.Modes;
 using WrappedModes = ResolutionChanger.Data.Modes;
 
 namespace ResolutionChanger.Win32.DisplayConfig.ModeInfo
 {
-    public class ModeInfoFactory
+    internal class ModeInfoFactory
     {
         public static ModeInfo Create(WrappedModes.ScreenMode screenMode)
         {

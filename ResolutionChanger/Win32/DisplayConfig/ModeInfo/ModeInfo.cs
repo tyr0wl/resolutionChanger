@@ -9,7 +9,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.ModeInfo
     ///     DISPLAYCONFIG_MODE_INFO structure (wingdi.h)
     /// </summary>
     [StructLayout(LayoutKind.Explicit)]
-    public struct ModeInfo
+    internal struct ModeInfo
     {
         /// <summary>
         ///     A value that indicates whether the <see cref="ModeInfo" /> structure represents source or target mode information.

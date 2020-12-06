@@ -5,7 +5,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.ModeInfo
     ///     DISPLAYCONFIG_MODE_INFO structure is either source or target mode.
     ///     DISPLAYCONFIG_MODE_INFO_TYPE enumeration (wingdi.h)
     /// </summary>
-    public enum ModeInfoType : uint
+    internal enum ModeInfoType : uint
     {
         None = 0,
 

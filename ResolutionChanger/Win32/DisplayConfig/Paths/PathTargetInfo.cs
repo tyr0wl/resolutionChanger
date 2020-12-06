@@ -11,7 +11,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.Paths
     ///     DISPLAYCONFIG_PATH_TARGET_INFO structure (wingdi.h)
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct PathTargetInfo
+    internal struct PathTargetInfo
     {
         public const uint ModeIdxInvalid = 0xffffffff;
 
@@ -36,19 +36,19 @@ namespace ResolutionChanger.Win32.DisplayConfig.Paths
         ///     The target's connector type. For a list of possible values, see the <see cref="VideoOutputTechnology" /> enumerated
         ///     type.
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)] private VideoOutputTechnology outputTechnology;
+        [MarshalAs(UnmanagedType.U4)] public VideoOutputTechnology outputTechnology;
 
         /// <summary>
         ///     A value that specifies the rotation of the target. For a list of possible values, see the <see cref="Rotation" />
         ///     enumerated type.
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)] private Rotation rotation;
+        [MarshalAs(UnmanagedType.U4)] public Rotation rotation;
 
         /// <summary>
         ///     A value that specifies how the source image is scaled to the target. For a list of possible values, see the
         ///     <see cref="Scaling" /> enumerated type. For more information about scaling, see Scaling the Desktop Image.
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)] private Scaling scaling;
+        [MarshalAs(UnmanagedType.U4)] public Scaling scaling;
 
         /// <summary>
         ///     A DISPLAYCONFIG_RATIONAL structure that specifies the refresh rate of the target. If the caller specifies target
@@ -62,7 +62,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.Paths
         ///     member to the <see cref="ScanLineOrdering.Unspecified" /> value; otherwise,
         ///     <see cref="DisplayConfigApi.SetDisplayConfig" /> fails.
         /// </summary>
-        [MarshalAs(UnmanagedType.Struct)] private Rational refreshRate;
+        [MarshalAs(UnmanagedType.Struct)] public Rational refreshRate;
 
         /// <summary>
         ///     A value that specifies the scan-line ordering of the output on the target. For a list of possible values, see the
@@ -72,7 +72,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.Paths
         ///     case, the caller specifies this value in the <see cref="TargetMode.targetVideoSignalInfo" /> member of the
         ///     <see cref="TargetMode" /> structure.
         /// </summary>
-        [MarshalAs(UnmanagedType.U4)] private ScanLineOrdering scanLineOrdering;
+        [MarshalAs(UnmanagedType.U4)] public ScanLineOrdering scanLineOrdering;
 
         /// <summary>
         ///     A Boolean value that specifies whether the target is available. <c>true</c> indicates that the target is available.
@@ -97,41 +97,20 @@ namespace ResolutionChanger.Win32.DisplayConfig.Paths
             return $@"{{target {id},{statusFlags},[{modeIdxString}]->{outputTechnology}}}";
         }
 
-        public static explicit operator Target(PathTargetInfo targetInfo)
+        public static explicit operator PathTargetInfo(TargetPath targetPath)
         {
             return new()
             {
-                DeviceId = new DeviceId
-                {
-                    AdapterId = targetInfo.adapterId.LowPart,
-                    Id = targetInfo.id
-                },
-                InUse = targetInfo.statusFlags.HasFlag(PathTargetInfoFlags.InUse),
-                ModeIndex = targetInfo.InvalidModeIdx ? -1 : (int)targetInfo.modeInfoIdx,
-                VideoOutput = targetInfo.outputTechnology,
-                Available = targetInfo.targetAvailable,
-                RefreshRate = targetInfo.refreshRate,
-                Rotation = targetInfo.rotation,
-                Scaling = targetInfo.scaling,
-                ScanLineOrdering = targetInfo.scanLineOrdering,
-                Status = targetInfo.statusFlags,
-            };
-        }
-
-        public static explicit operator PathTargetInfo(Target target)
-        {
-            return new()
-            {
-                adapterId = new LuId { LowPart = target.DeviceId.AdapterId },
-                id = target.DeviceId.Id,
-                modeInfoIdx = target.InvalidModeIndex ? ModeIdxInvalid : (uint)target.ModeIndex,
-                outputTechnology = target.VideoOutput,
-                refreshRate = target.RefreshRate,
-                rotation = target.Rotation,
-                scaling = target.Scaling,
-                scanLineOrdering = target.ScanLineOrdering,
-                targetAvailable = target.Available,
-                statusFlags = target.Status,
+                adapterId = new LuId { LowPart = targetPath.DeviceId.AdapterId },
+                id = targetPath.DeviceId.Id,
+                modeInfoIdx = targetPath.InvalidModeIndex ? ModeIdxInvalid : (uint)targetPath.ModeIndex,
+                outputTechnology = targetPath.VideoOutput,
+                refreshRate = targetPath.RefreshRate,
+                rotation = targetPath.Rotation,
+                scaling = targetPath.Scaling,
+                scanLineOrdering = targetPath.ScanLineOrdering,
+                targetAvailable = targetPath.Available,
+                statusFlags = targetPath.Status,
             };
         }
     }

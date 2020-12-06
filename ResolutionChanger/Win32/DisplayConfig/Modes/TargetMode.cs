@@ -7,7 +7,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.Modes
     ///     DISPLAYCONFIG_TARGET_MODE structure (wingdi.h)
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct TargetMode
+    internal struct TargetMode
     {
         /// <summary>
         ///     A DISPLAYCONFIG_VIDEO_SIGNAL_INFO structure that contains a detailed description of the current target mode.

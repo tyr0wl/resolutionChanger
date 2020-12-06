@@ -7,7 +7,7 @@ namespace ResolutionChanger.Win32.DisplaySettings
     ///     DEVMODE
     /// </summary>
     [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Ansi)]
-    public struct DevMode
+    internal struct DevMode
     {
         /// <summary>
         ///     CCHDEVICENAME

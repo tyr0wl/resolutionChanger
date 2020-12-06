@@ -6,7 +6,7 @@ namespace ResolutionChanger.Win32.DisplaySettings
     ///     Corresponds to DWORD parameter dwFlags of the <see cref="DisplaySettingsApi.ChangeDisplaySettingsEx"/> function (winuser.h)
     /// </summary>
     [Flags]
-    public enum ChangeDisplaySettingsFlags : uint
+    internal enum ChangeDisplaySettingsFlags : uint
     {
         /// <summary>
         ///     The graphics mode for the current screen will be changed dynamically.

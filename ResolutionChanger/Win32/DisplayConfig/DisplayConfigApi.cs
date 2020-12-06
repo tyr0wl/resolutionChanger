@@ -6,7 +6,7 @@ using ResolutionChanger.Win32.DisplayConfig.Paths;
 
 namespace ResolutionChanger.Win32.DisplayConfig
 {
-    public class DisplayConfigApi
+    internal class DisplayConfigApi
     {
         /// <summary>
         ///     The <see cref="DisplayConfigGetDeviceInfo(ref TargetDeviceName)" /> function retrieves display configuration

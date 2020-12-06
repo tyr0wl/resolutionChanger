@@ -8,7 +8,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.Paths
     ///     DISPLAYCONFIG_PATH_INFO structure (wingdi.h)
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct PathInfo
+    internal struct PathInfo
     {
         /// <summary>
         ///     A DISPLAYCONFIG_PATH_SOURCE_INFO structure that contains the source information for the path.
@@ -28,17 +28,6 @@ namespace ResolutionChanger.Win32.DisplayConfig.Paths
         public override string ToString()
         {
             return $"{{path {sourceInfo},{targetInfo},{flags}}}";
-        }
-
-        public static explicit operator ScreenPath(PathInfo pathInfo)
-        {
-            return new()
-            {
-                Source = (Source) pathInfo.sourceInfo,
-                Target = (Target) pathInfo.targetInfo,
-                Active = pathInfo.flags.HasFlag(PathInfoFlags.Active),
-                SupportsVirtualMode = pathInfo.flags.HasFlag(PathInfoFlags.SupportVirtualMode)
-            };
         }
 
         public static explicit operator PathInfo(ScreenPath screenPath)

@@ -8,7 +8,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.Modes
     ///     DISPLAYCONFIG_VIDEO_SIGNAL_INFO structure (wingdi.h)
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct VideoSignalInfo
+    internal struct VideoSignalInfo
     {
         /// <summary>
         ///     The pixel clock rate.

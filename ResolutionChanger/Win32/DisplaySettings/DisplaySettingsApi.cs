@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 namespace ResolutionChanger.Win32.DisplaySettings
 {
-    public class DisplaySettingsApi
+    internal class DisplaySettingsApi
     {
         /// <summary>
         ///     Retrieve the current settings for the display device.

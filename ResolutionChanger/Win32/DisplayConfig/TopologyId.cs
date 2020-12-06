@@ -4,7 +4,7 @@ namespace ResolutionChanger.Win32.DisplayConfig
     ///     The DISPLAYCONFIG_TOPOLOGY_ID enumeration specifies the type of display topology.
     ///     DISPLAYCONFIG_TOPOLOGY_ID enumeration (wingdi.h)
     /// </summary>
-    public enum TopologyId
+    internal enum TopologyId
     {
         None = 0,
 

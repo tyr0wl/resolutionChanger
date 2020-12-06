@@ -7,7 +7,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.Modes
     ///     DISPLAYCONFIG_SOURCE_MODE structure (wingdi.h)
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct SourceMode
+    internal struct SourceMode
     {
         /// <summary>
         ///     The width in pixels of the source mode.

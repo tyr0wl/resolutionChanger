@@ -21,7 +21,7 @@ namespace ResolutionChanger
 {
     public static class Win32ApiWrapper
     {
-        public static ModeInfo CreateSourceModeInfo(Monitor monitor)
+        internal static ModeInfo CreateSourceModeInfo(Monitor monitor)
         {
             var (adapterId, id) = monitor.SourceId;
             return new ModeInfo
@@ -39,7 +39,7 @@ namespace ResolutionChanger
             };
         }
 
-        public static ModeInfo CreateTargetModeInfo(Monitor monitor)
+        internal static ModeInfo CreateTargetModeInfo(Monitor monitor)
         {
             var preferredMode = GetTargetPreferredMode(monitor.TargetId);
             var (adapterId, id) = monitor.SourceId;
@@ -53,14 +53,14 @@ namespace ResolutionChanger
             };
         }
 
-        public static AdapterName GetAdapterName(LuId adapterId)
+        internal static AdapterName GetAdapterName(uint adapterId)
         {
             var requestPacket = new AdapterName
             {
                 header =
                 {
                     size = (uint) Marshal.SizeOf(typeof(AdapterName)),
-                    adapterId = adapterId,
+                    adapterId = (LuId) adapterId,
                     type = DeviceInfoType.GetAdapterName
                 }
             };
@@ -96,20 +96,25 @@ namespace ResolutionChanger
                 throw new Win32Exception(error);
             }
 
-            var wrappedPaths = paths.Select(path => (ScreenPath) path).ToArray();
+            var wrappedPaths = paths.Select(ScreenPathFactory.Create).ToArray();
             var wrappedModes = modes.Select(ScreenModeFactory.Create).ToArray();
             return (wrappedPaths, wrappedModes);
         }
 
-        public static SourceDeviceName GetGdiDeviceNameFromSource(DeviceId deviceId)
+        internal static SourceDeviceName GetGdiDeviceNameFromSource(DeviceId deviceId)
+        {
+            return GetGdiDeviceNameFromSource((LuId) deviceId.AdapterId, deviceId.Id);
+        }
+
+        internal static SourceDeviceName GetGdiDeviceNameFromSource(LuId adapterId, uint id)
         {
             var requestPacket = new SourceDeviceName
             {
                 header =
                 {
                     size = (uint) Marshal.SizeOf(typeof(SourceDeviceName)),
-                    adapterId = (LuId) deviceId.AdapterId,
-                    id = deviceId.Id,
+                    adapterId = adapterId,
+                    id = id,
                     type = DeviceInfoType.GetSourceName
                 }
             };
@@ -123,9 +128,15 @@ namespace ResolutionChanger
             return requestPacket;
         }
 
-        public static Monitor GetMonitor(ScreenPath path, ScreenMode[] modes, TargetDeviceName targetDeviceName)
+        public static Monitor GetMonitor(ScreenPath path, ScreenMode[] modes)
         {
-            var source = path.Source;
+            var targetDeviceName = GetTargetDeviceName(path.TargetPath.DeviceId);
+            return GetMonitor(path, modes, targetDeviceName);
+        }
+        
+        internal static Monitor GetMonitor(ScreenPath path, ScreenMode[] modes, TargetDeviceName targetDeviceName)
+        {
+            var source = path.SourcePath;
             SourceScreenMode sourceMode = null;
             if (!source.InvalidModeIndex)
             {
@@ -177,12 +188,11 @@ namespace ResolutionChanger
                 var source = path.SourcePath;
                 var target = path.TargetPath;
                 var sourceDeviceName = GetGdiDeviceNameFromSource(source.DeviceId);
-                var targetDeviceName = GetTargetDeviceName(target.DeviceId);
-                var adapterName = GetAdapterName((LuId) target.DeviceId.AdapterId);
+                var adapterName = GetAdapterName(target.DeviceId.AdapterId);
 
                 if (path.Active)
                 {
-                    var monitor = GetMonitor(path, modes, targetDeviceName);
+                    var monitor = GetMonitor(path, modes);
                     monitors.Add(sourceDeviceName.viewGdiDeviceName, monitor);
                 }
                 else if (!source.InUse && !target.InUse && !monitors.ContainsKey(sourceDeviceName.viewGdiDeviceName))
@@ -201,7 +211,7 @@ namespace ResolutionChanger
                     }
                     else
                     {
-                        var monitor = GetMonitor(path, modes, targetDeviceName);
+                        var monitor = GetMonitor(path, modes);
                         monitors.Add(sourceDeviceName.viewGdiDeviceName, monitor);
                     }
                 }
@@ -210,15 +220,19 @@ namespace ResolutionChanger
             return monitors.Values.ToList();
         }
 
-        public static TargetDeviceName GetTargetDeviceName(DeviceId deviceId)
+        internal static TargetDeviceName GetTargetDeviceName(DeviceId deviceId)
         {
-            var (adapterId, id) = deviceId;
+            return GetTargetDeviceName((LuId) deviceId.AdapterId, deviceId.Id);
+        }
+        
+        internal static TargetDeviceName GetTargetDeviceName(LuId adapterId, uint id)
+        {
             var deviceName = new TargetDeviceName
             {
                 header =
                 {
                     size = (uint) Marshal.SizeOf(typeof(TargetDeviceName)),
-                    adapterId = (LuId) adapterId,
+                    adapterId = adapterId,
                     id = id,
                     type = DeviceInfoType.GetTargetName
                 }
@@ -233,7 +247,7 @@ namespace ResolutionChanger
             return deviceName;
         }
 
-        public static TargetPreferredMode GetTargetPreferredMode(DeviceId deviceId)
+        internal static TargetPreferredMode GetTargetPreferredMode(DeviceId deviceId)
         {
             var (adapterId, id) = deviceId;
             var requestPacket = new TargetPreferredMode
@@ -270,7 +284,7 @@ namespace ResolutionChanger
             return SetDisplayConfig(paths, modes, SetDisplayConfigFlags.Validate | SetDisplayConfigFlags.UseSuppliedDisplayConfig | SetDisplayConfigFlags.AllowChanges, false);
         }
 
-        public static ModeInfo UpdateModeInfo(ModeInfo modeInfo, Monitor monitor)
+        internal static ModeInfo UpdateModeInfo(ModeInfo modeInfo, Monitor monitor)
         {
             return modeInfo.infoType switch
             {

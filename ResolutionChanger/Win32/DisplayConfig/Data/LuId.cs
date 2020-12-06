@@ -8,7 +8,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.Data
     ///     LUID structure (winnt.h)
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct LuId : IEquatable<LuId>
+    internal struct LuId : IEquatable<LuId>
     {
         /// <summary>
         ///     Specifies a DWORD that contains the unsigned lower numbers of the id.

@@ -3,7 +3,7 @@ namespace ResolutionChanger.Win32.DisplaySettings
     /// <summary>
     ///     Represents the possible return values of the <see cref="DisplaySettingsApi.ChangeDisplaySettingsEx"/> function (winuser.h)
     /// </summary>
-    public enum DisplayChange
+    internal enum DisplayChange
     {
         /// <summary>
         ///     The settings change was successful.

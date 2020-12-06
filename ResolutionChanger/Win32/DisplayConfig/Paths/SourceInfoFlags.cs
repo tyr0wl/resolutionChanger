@@ -6,7 +6,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.Paths
     ///     Corresponds to UINT32 field statusFlags of the <see cref="PathSourceInfo"/> structure.
     /// </summary>
     [Flags]
-    public enum SourceInfoFlags : uint
+    internal enum SourceInfoFlags : uint
     {
         None = 0,
 

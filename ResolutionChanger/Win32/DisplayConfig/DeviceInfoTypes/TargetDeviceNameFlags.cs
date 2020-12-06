@@ -7,7 +7,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes
     ///     DISPLAYCONFIG_TARGET_DEVICE_NAME_FLAGS structure (wingdi.h)
     /// </summary>
     [Flags]
-    public enum TargetDeviceNameFlags : uint
+    internal enum TargetDeviceNameFlags : uint
     {
         None = 0,
 

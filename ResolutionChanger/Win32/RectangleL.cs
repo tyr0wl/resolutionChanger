@@ -7,7 +7,7 @@ namespace ResolutionChanger.Win32
     ///     RECTL structure (windef.h)
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public readonly struct RectangleL
+    internal readonly struct RectangleL
     {
         /// <summary>
         ///     Specifies the x-coordinate of the upper-left corner of the rectangle.

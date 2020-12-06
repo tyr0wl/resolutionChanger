@@ -7,7 +7,7 @@ namespace ResolutionChanger.Win32.DisplaySettings
     ///     DISPLAY_DEVICE
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public struct DisplayDevice
+    internal struct DisplayDevice
     {
         [MarshalAs(UnmanagedType.U4)]
         public int cb;

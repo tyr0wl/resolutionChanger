@@ -3,7 +3,7 @@
 namespace ResolutionChanger.Win32.DisplaySettings
 {
     [Flags]
-    public enum DmFieldFlags
+    internal enum DmFieldFlags
     {
         None = 0,
 

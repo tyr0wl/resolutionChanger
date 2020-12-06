@@ -6,7 +6,7 @@ namespace ResolutionChanger.Win32.DisplaySettings
     ///     Corresponds to DWORD field StateFlags of the <see cref="DisplayDevice.StateFlags"/> structure.
     /// </summary>
     [Flags]
-    public enum DisplayDeviceStateFlags
+    internal enum DisplayDeviceStateFlags
     {
         None = 0,
 

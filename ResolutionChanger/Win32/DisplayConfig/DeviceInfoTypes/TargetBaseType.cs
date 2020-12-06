@@ -8,7 +8,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes
     ///     DISPLAYCONFIG_TARGET_BASE_TYPE structure (wingdi.h)
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct TargetBaseType
+    internal struct TargetBaseType
     {
         /// <summary>
         ///     A DISPLAYCONFIG_DEVICE_INFO_HEADER structure that contains info about the request for the target device name. The

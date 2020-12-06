@@ -3,7 +3,7 @@ using ResolutionChanger.Win32.DisplayConfig.ModeInfo;
 
 namespace ResolutionChanger.Data.Modes
 {
-    public class ScreenModeFactory
+    internal class ScreenModeFactory
     {
         public static ScreenMode Create(ModeInfo modeInfo)
         {

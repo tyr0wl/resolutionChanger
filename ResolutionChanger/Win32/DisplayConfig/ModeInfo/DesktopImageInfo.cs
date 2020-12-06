@@ -7,7 +7,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.ModeInfo
     ///     DISPLAYCONFIG_DESKTOP_IMAGE_INFO structure (wingdi.h)
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct DesktopImageInfo
+    internal struct DesktopImageInfo
     {
         /// <summary>
         ///     A POINTL structure that specifies the size of the VidPn source surface that is being displayed on the monitor.

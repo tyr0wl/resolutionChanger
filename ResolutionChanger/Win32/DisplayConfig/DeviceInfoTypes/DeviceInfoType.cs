@@ -5,7 +5,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes
     ///     through the DisplayConfigSetDeviceInfo or <see cref="DisplayConfigApi.DisplayConfigGetDeviceInfo" /> function.
     ///     DISPLAYCONFIG_DEVICE_INFO_TYPE enumeration (wingdi.h)
     /// </summary>
-    public enum DeviceInfoType : uint
+    internal enum DeviceInfoType : uint
     {
         None = 0,
 

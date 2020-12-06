@@ -8,7 +8,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes
     ///     DISPLAYCONFIG_TARGET_DEVICE_NAME structure (wingdi.h)
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    public struct TargetDeviceName
+    internal struct TargetDeviceName
     {
         /// <summary>
         ///     A DISPLAYCONFIG_DEVICE_INFO_HEADER structure that contains information about the request for the target device

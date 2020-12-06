@@ -10,7 +10,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.Paths
     ///     DISPLAYCONFIG_PATH_SOURCE_INFO structure (wingdi.h)
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct PathSourceInfo
+    internal struct PathSourceInfo
     {
         public const uint ModeIdxInvalid = 0xffffffff;
 
@@ -44,28 +44,14 @@ namespace ResolutionChanger.Win32.DisplayConfig.Paths
             return $@"{{source {id},{statusFlags},[{modeIdxString}]}}";
         }
 
-        public static explicit operator Source(PathSourceInfo sourceInfo)
+        public static explicit operator PathSourceInfo(SourcePath sourcePath)
         {
             return new()
             {
-                DeviceId = new DeviceId
-                {
-                    AdapterId = sourceInfo.adapterId.LowPart,
-                    Id = sourceInfo.id
-                },
-                InUse = sourceInfo.statusFlags.HasFlag(SourceInfoFlags.InUse),
-                ModeIndex = sourceInfo.InvalidModeIdx ? -1 : (int) sourceInfo.modeInfoIdx,
-            };
-        }
-
-        public static explicit operator PathSourceInfo(Source source)
-        {
-            return new()
-            {
-                adapterId = new LuId { LowPart = source.DeviceId.AdapterId },
-                id = source.DeviceId.Id,
-                modeInfoIdx = source.InvalidModeIndex ? ModeIdxInvalid : (uint) source.ModeIndex,
-                statusFlags = source.InUse ? SourceInfoFlags.InUse : SourceInfoFlags.None,
+                adapterId = new LuId { LowPart = sourcePath.DeviceId.AdapterId },
+                id = sourcePath.DeviceId.Id,
+                modeInfoIdx = sourcePath.InvalidModeIndex ? ModeIdxInvalid : (uint) sourcePath.ModeIndex,
+                statusFlags = sourcePath.InUse ? SourceInfoFlags.InUse : SourceInfoFlags.None,
             };
         }
     }
