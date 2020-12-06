@@ -64,7 +64,7 @@ namespace ResolutionChanger.Data.Modes
         public override string ToString()
         {
             return
-                $"{{{GetType().Name} {VideoStandard}, hSync:{HorizontalSyncFrequency}, vSync:{VerticalSyncFrequency}({VerticalSyncFrequencyDivider}), {nameof(ActiveSize)}:{ActiveSize}, {nameof(TotalSize)}:{TotalSize},{ScanLineOrdering}}}";
+                $"{{ {GetType().Name} {VideoStandard}, hSync:{HorizontalSyncFrequency}, vSync:{VerticalSyncFrequency}({VerticalSyncFrequencyDivider}), {nameof(ActiveSize)}: {ActiveSize}, {nameof(TotalSize)}: {TotalSize}, {ScanLineOrdering} }}";
         }
     }
 }

@@ -71,7 +71,7 @@ namespace ResolutionChanger.Data.Modes
         public override string ToString()
         {
             var pixelFormatString = PixelFormat.ToString().Replace(nameof(PixelFormat), string.Empty);
-            return $"{{{GetType().Name} {Width}x{Height},{pixelFormatString},{Position}}}";
+            return $"{{ {GetType().Name} {Width}x{Height}, {pixelFormatString}, {Position} }}";
         }
     }
 }

@@ -78,7 +78,7 @@ namespace ResolutionChanger.Data.Paths
 
         public override string ToString()
         {
-            return $"{{path {SourcePath},{TargetPath},{(Active ? "active" : "")}}}";
+            return $"{{ path {SourcePath}, {TargetPath}, {(Active ? "active" : "inactive")} }}";
         }
     }
 }

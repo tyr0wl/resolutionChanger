@@ -21,7 +21,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.Data
 
         public override string ToString()
         {
-            return $"{{{nameof(cx)}: {cx}, {nameof(cy)}: {cy}}}";
+            return $"{{ {nameof(cx)}: {cx}, {nameof(cy)}: {cy} }}";
         }
     }
 }

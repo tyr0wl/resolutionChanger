@@ -22,7 +22,7 @@ namespace ResolutionChanger.Win32.DisplayConfig.Data
 
         public override string ToString()
         {
-            return $"{{{GetType().Name} {Numerator},{Denominator}}}";
+            return $"{{ {GetType().Name} {Numerator}, {Denominator} }}";
         }
     }
 }
