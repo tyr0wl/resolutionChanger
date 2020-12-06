@@ -270,10 +270,6 @@ namespace ResolutionChanger
             return requestPacket;
         }
 
-        public static void SaveMonitorSetup(ScreenPath[] paths, ScreenMode[] modes)
-        {
-        }
-
         public static void SetConfig(IEnumerable<ScreenPath> paths, IEnumerable<ScreenMode> modes)
         {
             SetDisplayConfig(paths, modes, SetDisplayConfigFlags.Apply | SetDisplayConfigFlags.UseSuppliedDisplayConfig | SetDisplayConfigFlags.AllowChanges, true);
