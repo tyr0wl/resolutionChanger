@@ -4,7 +4,7 @@ using ResolutionChanger.Win32.DisplayConfig.Paths;
 
 namespace ResolutionChanger.Data.Paths
 {
-    public class Target : PathData, IEquatable<Target>
+    public class TargetPath : PathData, IEquatable<TargetPath>
     {
         public bool Available { get; init; }
         public Rational RefreshRate { get; init; }
@@ -13,8 +13,13 @@ namespace ResolutionChanger.Data.Paths
         public ScanLineOrdering ScanLineOrdering { get; init; }
         public PathTargetInfoFlags Status { get; init; }
         public VideoOutputTechnology VideoOutput { get; init; }
+        public uint ConnectorInstance { get; init; }
+        public string MonitorDeviceName { get; init; }
+        public string MonitorDevicePath { get; init; }
+        public ushort EdidManufactureId { get; init; }
+        public ushort EdidProductCodeId { get; init; }
 
-        public bool Equals(Target other)
+        public bool Equals(TargetPath other)
         {
             if (other is null)
             {
@@ -26,8 +31,7 @@ namespace ResolutionChanger.Data.Paths
                 return true;
             }
 
-            return VideoOutput == other.VideoOutput && Rotation == other.Rotation && Scaling == other.Scaling && RefreshRate.Equals(other.RefreshRate) && ScanLineOrdering == other.ScanLineOrdering && Available == other.Available &&
-                   Status == other.Status;
+            return DeviceId == other.DeviceId;
         }
 
         public override bool Equals(object obj)
@@ -42,7 +46,7 @@ namespace ResolutionChanger.Data.Paths
                 return true;
             }
 
-            return obj.GetType() == GetType() && Equals((Target) obj);
+            return obj.GetType() == GetType() && Equals((TargetPath) obj);
         }
 
         public override int GetHashCode()
@@ -50,12 +54,12 @@ namespace ResolutionChanger.Data.Paths
             return HashCode.Combine((int) VideoOutput, (int) Rotation, (int) Scaling, RefreshRate, (int) ScanLineOrdering, Available, (int) Status);
         }
 
-        public static bool operator ==(Target left, Target right)
+        public static bool operator ==(TargetPath left, TargetPath right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(Target left, Target right)
+        public static bool operator !=(TargetPath left, TargetPath right)
         {
             return !Equals(left, right);
         }
@@ -66,7 +70,7 @@ namespace ResolutionChanger.Data.Paths
             return $@"{{{GetType().Name} {DeviceId},{Status},[{modeIdxString}]->{VideoOutput}}}";
         }
 
-        public Target Copy
+        public TargetPath Copy
         (
             DeviceId? deviceId = null,
             VideoOutputTechnology? videoOutput = null,
@@ -77,7 +81,12 @@ namespace ResolutionChanger.Data.Paths
             bool? available = null,
             bool? inUse = null,
             PathTargetInfoFlags? status = null,
-            int? modeIndex = null
+            int? modeIndex = null,
+            uint? connectorInstance = null,
+            string monitorDeviceName = null,
+            string monitorDevicePath = null,
+            ushort? edidManufactureId = null,
+            ushort? edidProductCodeId = null
         )
         {
             return new()
@@ -91,7 +100,12 @@ namespace ResolutionChanger.Data.Paths
                 Available = available ?? Available,
                 InUse = inUse ?? InUse,
                 Status = status ?? Status,
-                ModeIndex = modeIndex ?? ModeIndex
+                ModeIndex = modeIndex ?? ModeIndex,
+                ConnectorInstance = connectorInstance ?? ConnectorInstance,
+                MonitorDeviceName = monitorDeviceName ?? MonitorDeviceName,
+                MonitorDevicePath = monitorDevicePath ?? MonitorDevicePath,
+                EdidManufactureId = edidManufactureId ?? EdidManufactureId,
+                EdidProductCodeId = edidProductCodeId ?? EdidProductCodeId,
             };
         }
     }

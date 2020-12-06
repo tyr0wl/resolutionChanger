@@ -2,9 +2,11 @@
 
 namespace ResolutionChanger.Data.Paths
 {
-    public class Source : PathData, IEquatable<PathData>
+    public class SourcePath : PathData, IEquatable<SourcePath>
     {
-        public bool Equals(PathData other)
+        public string GdiDeviceName { get; init; }
+
+        public bool Equals(SourcePath other)
         {
             if (other is null)
             {
@@ -16,21 +18,23 @@ namespace ResolutionChanger.Data.Paths
                 return true;
             }
 
-            return DeviceId.Equals(other.DeviceId) && InUse == other.InUse && ModeIndex == other.ModeIndex;
+            return DeviceId == other.DeviceId;
         }
 
-        public Source Copy
+        public SourcePath Copy
         (
             DeviceId? deviceId = null,
             bool? inUse = null,
-            int? modeIndex = null
+            int? modeIndex = null,
+            string gdiDeviceName = null
         )
         {
             return new()
             {
                 DeviceId = deviceId ?? DeviceId,
                 InUse = inUse ?? InUse,
-                ModeIndex = modeIndex ?? ModeIndex
+                ModeIndex = modeIndex ?? ModeIndex,
+                GdiDeviceName = gdiDeviceName ?? GdiDeviceName
             };
         }
 
@@ -46,20 +50,20 @@ namespace ResolutionChanger.Data.Paths
                 return true;
             }
 
-            return obj.GetType() == GetType() && Equals((PathData) obj);
+            return obj.GetType() == GetType() && Equals((SourcePath) obj);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(DeviceId, InUse, ModeIndex);
+            return GdiDeviceName != null ? GdiDeviceName.GetHashCode() : 0;
         }
 
-        public static bool operator ==(Source left, Source right)
+        public static bool operator ==(SourcePath left, SourcePath right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(Source left, Source right)
+        public static bool operator !=(SourcePath left, SourcePath right)
         {
             return !Equals(left, right);
         }

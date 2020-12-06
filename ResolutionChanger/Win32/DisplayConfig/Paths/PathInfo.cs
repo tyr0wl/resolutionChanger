@@ -56,8 +56,8 @@ namespace ResolutionChanger.Win32.DisplayConfig.Paths
 
             return new PathInfo
             {
-                sourceInfo = (PathSourceInfo) screenPath.Source,
-                targetInfo = (PathTargetInfo) screenPath.Target,
+                sourceInfo = (PathSourceInfo) screenPath.SourcePath,
+                targetInfo = (PathTargetInfo) screenPath.TargetPath,
                 flags = flags
             };
         }

@@ -5,9 +5,9 @@ namespace ResolutionChanger.Data.Paths
     public class ScreenPath : IEquatable<ScreenPath>
     {
         public bool Active { get; init; }
-        public Source Source { get; init; }
+        public SourcePath SourcePath { get; init; }
         public bool SupportsVirtualMode { get; init; }
-        public Target Target { get; init; }
+        public TargetPath TargetPath { get; init; }
 
         public bool Equals(ScreenPath other)
         {
@@ -21,21 +21,21 @@ namespace ResolutionChanger.Data.Paths
                 return true;
             }
 
-            return Equals(Source, other.Source) && Equals(Target, other.Target) && Active == other.Active && SupportsVirtualMode == other.SupportsVirtualMode;
+            return Equals(SourcePath, other.SourcePath) && Equals(TargetPath, other.TargetPath) && Active == other.Active && SupportsVirtualMode == other.SupportsVirtualMode;
         }
 
         public ScreenPath Copy
         (
-            Source source = null,
-            Target target = null,
+            SourcePath sourcePath = null,
+            TargetPath targetPath = null,
             bool? active = null,
             bool? supportsVirtualMode = null
         )
         {
             return new()
             {
-                Source = source ?? Source,
-                Target = target ?? Target,
+                SourcePath = sourcePath ?? SourcePath,
+                TargetPath = targetPath ?? TargetPath,
                 Active = active ?? Active,
                 SupportsVirtualMode = supportsVirtualMode ?? SupportsVirtualMode
             };
@@ -63,7 +63,7 @@ namespace ResolutionChanger.Data.Paths
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Source, Target, Active, SupportsVirtualMode);
+            return HashCode.Combine(SourcePath, TargetPath, Active, SupportsVirtualMode);
         }
 
         public static bool operator ==(ScreenPath left, ScreenPath right)
@@ -78,7 +78,7 @@ namespace ResolutionChanger.Data.Paths
 
         public override string ToString()
         {
-            return $"{{path {Source},{Target},{(Active ? "active" : "")}}}";
+            return $"{{path {SourcePath},{TargetPath},{(Active ? "active" : "")}}}";
         }
     }
 }

@@ -134,7 +134,7 @@ namespace ResolutionChanger
 
             var (isPrimary, resolution, point) = GetSourceModeInformation(sourceMode);
 
-            var target = path.Target;
+            var target = path.TargetPath;
             TargetScreenMode targetMode = null;
             if (!target.InvalidModeIndex)
             {
@@ -169,13 +169,13 @@ namespace ResolutionChanger
             {
                 var path = paths[index];
 
-                if (!path.Target.Available)
+                if (!path.TargetPath.Available)
                 {
                     continue;
                 }
 
-                var source = path.Source;
-                var target = path.Target;
+                var source = path.SourcePath;
+                var target = path.TargetPath;
                 var sourceDeviceName = GetGdiDeviceNameFromSource(source.DeviceId);
                 var targetDeviceName = GetTargetDeviceName(target.DeviceId);
                 var adapterName = GetAdapterName((LuId) target.DeviceId.AdapterId);
