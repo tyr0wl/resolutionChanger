@@ -21,6 +21,12 @@ namespace ResolutionChanger
                 throw new ArgumentException("cannot be null or empty", nameof(name));
             }
 
+            var filePath = $"profiles/{name}.json";
+            if (!File.Exists(filePath))
+            {
+                return null;
+            }
+
             var serializedScreenConfiguration = File.ReadAllText($"profiles/{name}.json");
 
             return JsonConvert.DeserializeObject<ScreenConfiguration>(serializedScreenConfiguration, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
