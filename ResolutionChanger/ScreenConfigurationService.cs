@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using ResolutionChanger.Data;
+using ResolutionChanger.Win32.DisplayConfig;
 
 namespace ResolutionChanger
 {
@@ -30,6 +32,12 @@ namespace ResolutionChanger
             var serializedScreenConfiguration = File.ReadAllText($"profiles/{name}.json");
 
             return JsonConvert.DeserializeObject<ScreenConfiguration>(serializedScreenConfiguration, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
+        }
+
+        public static ScreenConfiguration GetCurrent(string name)
+        {
+            var (paths, modes) = Win32ApiWrapper.GetDisplayConfig(QueryDeviceConfigFlags.OnlyActivePaths);
+            return new ScreenConfiguration { Name = name, Paths = paths.ToList(), Modes = modes.ToList() };
         }
 
         /// <summary>
