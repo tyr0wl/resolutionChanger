@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using ResolutionChanger.Data.Paths;
 using ResolutionChanger.Win32;
@@ -16,14 +17,30 @@ namespace ResolutionChanger.Console
             var monitors = Win32ApiWrapper.GetMonitors();
 
             var setup = args.FirstOrDefault();
-            if (setup == "a")
+
+            if (string.IsNullOrEmpty(setup))
             {
-                SetSetupA(monitors);
+                throw new InvalidDataException("missing profile name to load");
             }
-            else
+            
+            var configuration = ScreenConfigurationService.Get(setup);
+            if (configuration == null)
             {
-                SetSetupB(monitors);
+                var current = ScreenConfigurationService.GetCurrent(setup);
+                ScreenConfigurationService.SaveOrUpdate(current);
+                return;
             }
+            
+            if (Win32ApiWrapper.TestConfig(configuration.Paths, configuration.Modes) == Win32Status.ErrorSuccess)
+            {
+                Win32ApiWrapper.SetConfig(configuration.Paths, configuration.Modes);
+            }
+        }
+
+        private static void PrintPath(SourcePath source, TargetPath target)
+        {
+            SystemConsole.WriteLine(
+                $"path:{source.DeviceId.Id}+{target.DeviceId.Id},{(source.InUse ? "Active" : "")}<->{target.Status}->{target.VideoOutput},{source.GdiDeviceName},{target.MonitorDeviceName},{target.MonitorDevicePath},{target.ConnectorInstance},{target.EdidManufactureId},{target.EdidProductCodeId}");
         }
 
         private static void SetSetupA(IList<Monitor> monitors)
