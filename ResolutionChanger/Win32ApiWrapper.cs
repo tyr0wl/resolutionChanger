@@ -342,23 +342,5 @@ namespace ResolutionChanger
             modeInfo.targetMode.targetVideoSignalInfo.vSyncFreq.Numerator = monitor.CurrentResolution.Frequency;
             return modeInfo;
         }
-
-        public static void SaveScreenConfiguration(ScreenPath[] paths, ScreenMode[] modes)
-        {
-            var pathsString = JsonConvert.SerializeObject(paths, Formatting.Indented, new StringEnumConverter());
-            var modesString = JsonConvert.SerializeObject(modes, Formatting.Indented, new JsonSerializerSettings { Converters = { new StringEnumConverter() }, TypeNameHandling = TypeNameHandling.Auto});
-            File.WriteAllText("paths.json", pathsString);
-            File.WriteAllText("modes.json", modesString);
-        }
-
-        public static (ScreenPath[] paths, ScreenMode[] modes) ReadScreenConfiguration()
-        {            
-            var pathsString = File.ReadAllText("./paths.json");
-            var modesString = File.ReadAllText("./modes.json");
-
-            var paths = JsonConvert.DeserializeObject<ScreenPath[]>(pathsString).ToArray();
-            var modes = JsonConvert.DeserializeObject<ScreenMode[]>(modesString, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto })!.ToArray();
-            return (paths, modes);
-        }
     }
 }
