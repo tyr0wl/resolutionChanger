@@ -1,23 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
-using ResolutionChanger.Data.Modes;
 using ResolutionChanger.Data.Paths;
 using ResolutionChanger.Win32;
 using ResolutionChanger.Win32.DisplayConfig;
-using ResolutionChanger.Win32.DisplayConfig.DeviceInfoTypes;
-using ResolutionChanger.Win32.DisplayConfig.Paths;
 using SystemConsole = System.Console;
 
 namespace ResolutionChanger.Console
 {
     internal class Program
     {
-        public static Dictionary<uint, string> friendlyMonitors = new ();
-
         private static void Main(string[] args)
         {
             var monitors = Win32ApiWrapper.GetMonitors();
