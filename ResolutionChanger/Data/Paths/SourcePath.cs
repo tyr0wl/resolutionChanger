@@ -67,5 +67,11 @@ namespace ResolutionChanger.Data.Paths
         {
             return !Equals(left, right);
         }
+
+        public override string ToString()
+        {
+            var inUseString = InUse ? "Yes" : "No";
+            return $@"{{ source {DeviceId}, {nameof(InUse)}: {inUseString}, [{ModeIndex}] }}";
+        }
     }
 }
