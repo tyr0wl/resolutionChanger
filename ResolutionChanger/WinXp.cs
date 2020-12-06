@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using ResolutionChanger.Win32;
 using ResolutionChanger.Win32.DisplaySettings;
 
-namespace ResolutionChanger.Console
+namespace ResolutionChanger
 {
     internal class WinXp
     {
