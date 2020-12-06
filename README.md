@@ -1,2 +1,3 @@
 # resolutionChanger
-Little App to change Resolution as to my requirements
+
+Little App to save and load screen configurations.
