@@ -28,7 +28,7 @@ namespace ResolutionChanger.Data.Paths
                 MonitorDevicePath = targetDeviceName.monitorDevicePath,
                 ConnectorInstance = targetDeviceName.connectorInstance,
                 EdidManufactureId = targetDeviceName.edidManufactureId,
-                EdidProductCodeId = targetDeviceName.edidManufactureId,
+                EdidProductCodeId = targetDeviceName.edidProductCodeId,
             };
         }
     }
