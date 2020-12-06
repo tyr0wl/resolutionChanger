@@ -47,6 +47,11 @@ namespace ResolutionChanger
                 throw new ArgumentException($"{nameof(screenConfiguration.Name)} property of the parameter {screenConfiguration} cannot be null or empty", nameof(screenConfiguration));
             }
 
+            if (!Directory.Exists("profiles"))
+            {
+                Directory.CreateDirectory("profiles");
+            }
+
             var serializedScreenConfiguration = JsonConvert.SerializeObject(screenConfiguration, Formatting.Indented, new JsonSerializerSettings { Converters = { new StringEnumConverter() }, TypeNameHandling = TypeNameHandling.Auto });
             File.WriteAllText($"profiles/{screenConfiguration.Name}.json", serializedScreenConfiguration);
         }
