@@ -40,7 +40,7 @@ namespace ResolutionChanger.Data
 
         public override string ToString()
         {
-            return $"{GetType().Name} {{{AdapterId},{Id}}}";
+            return $"{{ {GetType().Name} {AdapterId},{Id} }}";
         }
     }
 }
